@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MindNotes.Desktop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MindNotes.Desktop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
