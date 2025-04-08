@@ -43,6 +43,7 @@
 					<ScrollViewer>
 						<TextBlock x:Name="txtContentFront"
 								   ScrollViewer.VerticalScrollBarVisibility="Auto"
+								   TextWrapping="Wrap"
 								   Text="{Binding Content}" />
 					</ScrollViewer>
 

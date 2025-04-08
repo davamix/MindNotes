@@ -14,6 +14,7 @@ public interface INotesService {
     Task<Note> AddNoteAsync(string content);
     Task UpdateNoteAsync(Note note);
     Task DeleteNoteAsync(Guid id);
+    Task<IList<Note>> SearchNotesAsync(string query, ulong limit = 10);
 }
 public class NotesService : INotesService {
 
@@ -49,5 +50,13 @@ public class NotesService : INotesService {
 
     public async Task<IList<Note>> GetNotesAsync() {
         return await _provider.GetNotes();
+    }
+
+    public async Task<IList<Note>> SearchNotesAsync(string query, ulong limit = 10) {
+        var embeddings = await _embeddingsProvider.GenerateEmbeddings(query);
+
+        var qdrantQuery = new QdrantQuery(embeddings, query);
+
+        return await _provider.SearchNotes(qdrantQuery, limit);
     }
 }

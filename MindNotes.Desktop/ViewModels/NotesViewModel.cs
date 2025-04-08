@@ -57,4 +57,19 @@ public partial class NotesViewModel : ObservableObject{
         Notes.Remove(note);
     }
 
+    [RelayCommand]
+    private async Task SearchNotes(string query) {
+        var notes = await _notesService.SearchNotesAsync(query.ToString());
+        Notes.Clear();
+        foreach (var note in notes) {
+            Notes.Add(note);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ReloadNotes(string text) {
+        if (string.IsNullOrEmpty(text)) {
+            LoadNotes();
+        }
+    }
 }

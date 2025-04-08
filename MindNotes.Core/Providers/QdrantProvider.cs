@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using MindNotes.Core.Models;
 using Qdrant.Client;
 using Qdrant.Client.Grpc;
-using System.Diagnostics;
 
 namespace MindNotes.Core.Providers;
 public class QdrantProvider : IDatabaseProvider {
@@ -52,15 +51,16 @@ public class QdrantProvider : IDatabaseProvider {
         throw new NotImplementedException();
     }
 
-    public async Task<List<Note>> GetNotes() {
+    public async Task<List<Note>> GetNotes(Guid offsetId = default) {
         var notes = new List<Note>();
 
         var result = await _client.ScrollAsync(
             collectionName: _collection,
-            limit: 10,
+            limit: 50,
+            offset: offsetId == Guid.Empty ? null : offsetId,
             payloadSelector: true);
 
-        foreach(var value in result.Result) {
+        foreach (var value in result.Result) {
             var note = value.Payload.ToNote();
             note.Id = Guid.Parse(value.Id.Uuid);
             notes.Add(note);
@@ -73,6 +73,24 @@ public class QdrantProvider : IDatabaseProvider {
         note.UpdatedAt = DateTime.UtcNow;
 
         _ = await SaveNoteAsync(note);
+    }
+
+    public async Task<List<Note>> SearchNotes(QdrantQuery query, ulong limit = 10) {
+        var notes = new List<Note>();
+
+        var result = await _client.QueryAsync(
+            collectionName: _collection,
+            query: query.VectorQuery,
+            limit: limit);
+
+        foreach (var value in result) {
+            //if (value.Score < 0.5) continue;
+            var note = value.Payload.ToNote();
+            note.Id = Guid.Parse(value.Id.Uuid);
+            notes.Add(note);
+        }
+
+        return notes;
     }
 
     private async Task<Note> SaveNoteAsync(Note note) {
