@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace MindNotes.Core.Models;
 public partial class Note {
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
     public string Content { get; set; } = string.Empty;
+    public List<float[]> Embeddings { get; set; } = new();
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

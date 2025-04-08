@@ -13,12 +13,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="appsettings.json" />
     <None Remove="Controls\NoteControl.xaml" />
     <None Remove="Controls\PromptControl.xaml" />
     <None Remove="Views\NotesView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <Generator></Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -43,6 +48,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />

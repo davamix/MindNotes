@@ -6,6 +6,6 @@ public interface IDatabaseProvider {
     Task<List<Note>> GetNotes();
     Task<Note> AddNoteAsync(Note note);
     Task UpdateNoteAsync(Note note);
-    Task DeleteNoteAsync(string id);
-    Task<Note> GetNoteById(string id);
+    Task DeleteNoteAsync(Guid id);
+    Task<Note> GetNoteById(Guid id);
 }
