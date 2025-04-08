@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -33,5 +34,18 @@ public sealed partial class NotesView : UserControl {
 
     private void button_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
         this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+    }
+
+    private void btnSettings_Click(object sender, RoutedEventArgs e) {
+        var mainGrid = (sender as DependencyObject).FindAscendant("mainGrid");
+
+        if(mainGrid != null) {
+            var settings = mainGrid.FindDescendant("settingsViewControl");
+
+            if(settings != null) {
+                settings.Visibility = Visibility.Visible;
+            }
+                
+        }
     }
 }

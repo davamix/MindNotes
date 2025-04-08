@@ -9,8 +9,18 @@
 		mc:Ignorable="d"
 		Title="Mind Notes">
 
-	<Grid>
-		<uc:NotesView />
+	<Grid x:Name="mainGrid">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+
+		<uc:NotesView x:Name="notesViewControl"
+					  Grid.Column="0" />
+
+		<uc:SettingsView x:Name="settingsViewControl"
+						 Grid.Column="1"
+						 Visibility="Collapsed"/>
 	</Grid>
-	
+
 </Window>

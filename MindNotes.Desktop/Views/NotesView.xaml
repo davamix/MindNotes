@@ -41,6 +41,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
+			<!-- Search textbox -->
 			<AutoSuggestBox x:Name="txtSearch" Grid.Column="0"
 							Grid.Row="0"
 							Width="400"
@@ -61,16 +62,19 @@
 				</interactivity:Interaction.Behaviors>
 			</AutoSuggestBox>
 
-			<Button Grid.Column="1"
+			<!-- Configuration button --> 
+			<Button x:Name="btnSettings" Grid.Column="1"
 					Grid.Row="0"
 					Margin="5"
 					Background="Transparent"
 					BorderThickness="0"
 					PointerEntered="button_PointerEntered"
-					PointerExited="button_PointerExited">
+					PointerExited="button_PointerExited"
+					Click="btnSettings_Click">
 				<FontIcon Glyph="&#xE713;" />
 			</Button>
 
+			<!-- Notes list -->
 			<ScrollViewer Grid.Column="0"
 						  Grid.ColumnSpan="2"
 						  Grid.Row="1"
@@ -96,6 +100,7 @@
 			</ScrollViewer>
 		</Grid>
 
+		<!-- Prompt -->
 		<controls:PromptControl Width="500"
 								Height="150"
 								HorizontalAlignment="Center"
