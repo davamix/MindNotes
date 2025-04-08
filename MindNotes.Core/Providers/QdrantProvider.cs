@@ -10,6 +10,7 @@ public class QdrantProvider : IDatabaseProvider {
     private readonly IConfiguration _configuration;
     QdrantClient _client;
     string _collection;
+    ulong _embeddingsVectorSize;
 
     public QdrantProvider(IConfiguration configuration) {
         _configuration = configuration;
@@ -20,6 +21,7 @@ public class QdrantProvider : IDatabaseProvider {
     private async Task Initialize() {
         _client = new QdrantClient(new Uri(_configuration["AppSettings:Qdrant:Server"]));
         _collection = _configuration["AppSettings:Qdrant:Collection"];
+        _embeddingsVectorSize = ulong.Parse(_configuration["AppSettings:Ollama:OutputVectorSize"]);
 
         await CreateCollection();
     }
@@ -30,7 +32,7 @@ public class QdrantProvider : IDatabaseProvider {
         if (collections.Any(c => c == _collection)) return;
 
         await _client.CreateCollectionAsync(_collection, new VectorParams {
-            Size = 768,
+            Size = _embeddingsVectorSize,
             Distance = Distance.Cosine
         });
     }
