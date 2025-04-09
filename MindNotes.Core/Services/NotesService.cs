@@ -37,6 +37,9 @@ public class NotesService : INotesService {
     }
 
     public async Task UpdateNoteAsync(Note note) {
+        var embeddings = await _embeddingsProvider.GenerateEmbeddings(note.Content);
+        note.Embeddings = embeddings;
+        
         await _provider.UpdateNoteAsync(note);
     }
 
