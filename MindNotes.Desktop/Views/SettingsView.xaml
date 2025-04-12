@@ -29,14 +29,13 @@
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
-				<StackPanel Grid.Column="0"
-							Grid.Row="0"
-							Margin="0,0,5,24">
-					<TextBlock Text="Ollama server" />
-					<TextBox x:Name="txtOllamaServer"
-							 PlaceholderText="Ollama server address"
-							 Text="{Binding Settings.OllamaServerAddress}" />
-				</StackPanel>
+				<TextBox x:Name="txtOllamaServer"
+						 Grid.Column="0"
+						 Grid.Row="0"
+						 Margin="0,0,5,24"
+						 Header="Ollama server"
+						 PlaceholderText="Ollama server address"
+						 Text="{Binding Settings.OllamaServerAddress}" />
 				<Button x:Name="btnTestOllamaServer"
 						Grid.Column="1"
 						Grid.Row="0"
@@ -94,14 +93,14 @@
 
 				</Button>
 
-				<StackPanel Grid.Column="0"
-							Grid.Row="1"
-							Margin="0,0,5,24">
-					<TextBlock Text="Qdrant server" />
-					<TextBox x:Name="txtQdrantServer"
-							 PlaceholderText="Qdrant server address"
-							 Text="{Binding Settings.QdrantServerAddress}" />
-				</StackPanel>
+
+				<TextBox x:Name="txtQdrantServer"
+						 Grid.Column="0"
+						 Grid.Row="1"
+						 Margin="0,0,5,24"
+						 Header="Qdrant server"
+						 PlaceholderText="Qdrant server address"
+						 Text="{Binding Settings.QdrantServerAddress}" />
 
 				<Button x:Name="btnTestQdrantServer"
 						Grid.Column="1"

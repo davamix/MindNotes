@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="Controls\NoteControl.xaml" />
+    <None Remove="Controls\NotificationControl.xaml" />
     <None Remove="Controls\PromptControl.xaml" />
     <None Remove="Views\NotesView.xaml" />
     <None Remove="Views\SettingsView.xaml" />
@@ -75,6 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\NotificationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\SettingsView.xaml">

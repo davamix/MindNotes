@@ -109,7 +109,7 @@
 							 MaxLength="300"
 							 HorizontalAlignment="Stretch"
 							 VerticalAlignment="Stretch"
-							 KeyUp="txtContentBack_KeyUp"/>
+							 KeyUp="txtContentBack_KeyUp" />
 				</Border>
 
 				<Button x:Name="btnSave"
@@ -130,7 +130,7 @@
 						   VerticalAlignment="Bottom"
 						   HorizontalAlignment="Right"
 						   Margin="5"
-						   Style="{StaticResource CaptionTextBlockStyle}"/>
+						   Style="{StaticResource CaptionTextBlockStyle}" />
 			</Grid>
 
 		</Border>

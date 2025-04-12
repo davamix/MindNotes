@@ -45,6 +45,8 @@ namespace MindNotes.Desktop {
             var windowManager = WindowManager.Get(m_window);
             windowManager.MinHeight = 600;
             windowManager.MinWidth = 600;
+            windowManager.Width = 1920;
+            windowManager.Height = 1080;
         }
 
         private Window? m_window;

@@ -7,7 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MindNotes.Desktop.ViewModels;
-public partial class NotesViewModel : ObservableObject{
+
+public partial class NotesViewModel : ObservableObject {
     private readonly INotesService _notesService;
 
     public ObservableCollection<Note> Notes { get; set; } = new();
@@ -15,15 +16,23 @@ public partial class NotesViewModel : ObservableObject{
     [ObservableProperty]
     private string promptText;
 
+    //[ObservableProperty]
+    //private string notificationContent;
+    [ObservableProperty]
+    private Notification notification;
+
     public NotesViewModel(INotesService notesService) {
         _notesService = notesService;
+
+        //notificationContent = "C";
+        notification = new Notification();
 
         LoadNotes();
     }
 
     private async void LoadNotes() {
         Notes.Clear();
-        
+
         var notes = await _notesService.GetNotesAsync();
 
         foreach (var note in notes) {
@@ -42,7 +51,7 @@ public partial class NotesViewModel : ObservableObject{
     }
 
     [RelayCommand]
-    private async Task AddNote(){
+    private async Task AddNote() {
         var newNote = await _notesService.AddNoteAsync(PromptText);
 
         Notes.Insert(0, newNote);
@@ -71,5 +80,22 @@ public partial class NotesViewModel : ObservableObject{
         if (string.IsNullOrEmpty(text)) {
             LoadNotes();
         }
+    }
+
+    [RelayCommand]
+    private void ShowNotification(string severity) {
+        Notification.IsOpen = true;
+        Notification.Content = "This is a notification";
+
+        if (severity == "1")
+            Notification.Severity = NotificationSeverity.Error;
+        if (severity == "2")
+            Notification.Severity = NotificationSeverity.Warning;
+        if (severity == "3")
+            Notification.Severity = NotificationSeverity.Success;
+        if (severity == "4")
+            Notification.Severity = NotificationSeverity.Info;
+
+        OnPropertyChanged(nameof(Notification));
     }
 }

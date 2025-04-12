@@ -7,8 +7,11 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:controls="using:MindNotes.Desktop.Controls"
 			 xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+			 xmlns:converters="using:MindNotes.Desktop.Converters"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
+		<converters:StringToInfoBarSeverityConverter x:Key="stringToInfoBarServerityConverter" />
+
 		<Style x:Key="gridStyle"
 			   TargetType="Grid">
 			<Setter Property="Background">
@@ -105,6 +108,42 @@
 								Height="150"
 								HorizontalAlignment="Center"
 								VerticalAlignment="Bottom" />
+
+		<controls:NotificationControl Width="624"
+									  Height="80"
+									  HorizontalAlignment="Left"
+									  VerticalAlignment="Top"
+									  Margin="36,12,0,12"
+									  IsOpen="{Binding Notification.IsOpen, Mode=TwoWay}"
+									  NotificationContent="{Binding Notification.Content}"
+									  Severity="{Binding Notification.Severity}"/>
+
+		<StackPanel VerticalAlignment="Center">
+			<Button Content="Show Error"
+					Command="{Binding ShowNotificationCommand}"
+					CommandParameter="1"/>
+			<Button Content="Show Warning"
+					Command="{Binding ShowNotificationCommand}"
+					CommandParameter="2"/>
+			<Button Content="Show Success"
+					Command="{Binding ShowNotificationCommand}"
+					CommandParameter="3"/>
+			<Button Content="Show Info"
+					Command="{Binding ShowNotificationCommand}"
+					CommandParameter="4"/>
+		</StackPanel>
+		
+
+		<!--<InfoBar Width="624"
+				 Height="80"
+				 HorizontalAlignment="Left"
+				 VerticalAlignment="Top"
+				 Margin="36,12,0,12"
+				 IsOpen="{Binding Notification.IsOpen}"
+				 Message="{Binding Notification.Content}"
+				 Severity="{Binding Notification.Severity, Converter={StaticResource stringToInfoBarServerityConverter}}"
+				 IsClosable="True"/>-->
+
 
 	</Grid>
 </UserControl>

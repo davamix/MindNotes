@@ -20,7 +20,7 @@
 
 		<uc:SettingsView x:Name="settingsViewControl"
 						 Grid.Column="1"
-						 Width="600"
+						 Width="500"
 						 Visibility="Collapsed"/>
 	</Grid>
 
