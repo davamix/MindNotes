@@ -1,4 +1,4 @@
-# MindNotes
+# MindNotes (WIP)
 
 WinUI 3 application to write notes.
 
