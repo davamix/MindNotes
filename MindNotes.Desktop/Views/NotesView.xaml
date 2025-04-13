@@ -110,13 +110,12 @@
 								VerticalAlignment="Bottom" />
 
 		<controls:NotificationControl Width="624"
-									  Height="80"
+									  MinHeight="80"
+									  MaxHeight="200"
 									  HorizontalAlignment="Left"
 									  VerticalAlignment="Top"
 									  Margin="36,12,0,12"
-									  IsOpen="{Binding Notification.IsOpen, Mode=TwoWay}"
-									  NotificationContent="{Binding Notification.Content}"
-									  Severity="{Binding Notification.Severity}"/>
+									  Notification="{Binding Notification}"/>
 
 		<StackPanel VerticalAlignment="Center">
 			<Button Content="Show Error"
@@ -132,18 +131,5 @@
 					Command="{Binding ShowNotificationCommand}"
 					CommandParameter="4"/>
 		</StackPanel>
-		
-
-		<!--<InfoBar Width="624"
-				 Height="80"
-				 HorizontalAlignment="Left"
-				 VerticalAlignment="Top"
-				 Margin="36,12,0,12"
-				 IsOpen="{Binding Notification.IsOpen}"
-				 Message="{Binding Notification.Content}"
-				 Severity="{Binding Notification.Severity, Converter={StaticResource stringToInfoBarServerityConverter}}"
-				 IsClosable="True"/>-->
-
-
 	</Grid>
 </UserControl>

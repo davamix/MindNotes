@@ -75,13 +75,27 @@
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 
-						<ScrollViewer Grid.Column="0">
-							<TextBlock x:Name="txtNotificationContent"
-									   ScrollViewer.VerticalScrollBarVisibility="Auto"
-									   TextWrapping="Wrap"
-									   IsTextSelectionEnabled="True">
-							</TextBlock>
-						</ScrollViewer>
+						<Expander  Grid.Column="0"
+								   HorizontalAlignment="Stretch"
+								   HorizontalContentAlignment="Stretch">
+							<Expander.Header>
+								<TextBlock x:Name="txtNotificationMessage"
+								Margin="0"
+										   TextWrapping="Wrap"
+										   IsTextSelectionEnabled="True"
+										   Text="{Binding Notification.Message}" />
+
+							</Expander.Header>
+							<Expander.Content>
+								<ScrollViewer>
+									<TextBlock x:Name="txtNotificationContent"
+											   ScrollViewer.VerticalScrollBarVisibility="Auto"
+											   TextWrapping="Wrap"
+											   IsTextSelectionEnabled="True"
+											   Text="{Binding Notification.Content}" />
+								</ScrollViewer>
+							</Expander.Content>
+						</Expander>
 
 						<Button x:Name="btnCopyNotification"
 								Grid.Column="1"
@@ -96,7 +110,6 @@
 							<FontIcon Glyph="&#xE8C8;" />
 						</Button>
 					</Grid>
-
 
 				</Border>
 			</Grid>

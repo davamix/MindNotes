@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MindNotes.Core.Models;
 using MindNotes.Core.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,8 +17,6 @@ public partial class NotesViewModel : ObservableObject {
     [ObservableProperty]
     private string promptText;
 
-    //[ObservableProperty]
-    //private string notificationContent;
     [ObservableProperty]
     private Notification notification;
 
@@ -61,9 +60,13 @@ public partial class NotesViewModel : ObservableObject {
 
     [RelayCommand]
     private async Task DeleteNote(Note note) {
-        await _notesService.DeleteNoteAsync(note.Id);
+        try {
+            await _notesService.DeleteNoteAsync(note.Id);
 
-        Notes.Remove(note);
+            Notes.Remove(note);
+        } catch (Exception ex) {
+            Notify("Error on delete note.", ex.Message, NotificationSeverity.Error);
+        }
     }
 
     [RelayCommand]
@@ -84,17 +87,28 @@ public partial class NotesViewModel : ObservableObject {
 
     [RelayCommand]
     private void ShowNotification(string severity) {
-        Notification.IsOpen = true;
-        Notification.Content = "This is a notification";
+        var message = "This is a notification";
+        var longContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non dapibus purus, vel elementum purus. Vestibulum in placerat turpis, hendrerit pellentesque turpis. Pellentesque varius elit orci, vel scelerisque erat consectetur in. Sed eget felis libero. Praesent ligula sapien, imperdiet in odio non, aliquet placerat ligula. Vestibulum pulvinar elit sed lobortis vehicula. Quisque lobortis odio id dui interdum, in bibendum dui fermentum. Vestibulum non efficitur arcu. Ut lacinia, augue ut placerat tempor, mi arcu lobortis sem, sit amet malesuada mauris tellus ac mi. Morbi vitae viverra lorem, ut venenatis ex. Ut faucibus quam vitae ex aliquam, ac lacinia dolor finibus. Phasellus finibus malesuada ante in bibendum. Duis dapibus lacinia auctor. Mauris aliquet lectus eu eleifend laoreet. In semper vulputate vulputate.";
 
         if (severity == "1")
-            Notification.Severity = NotificationSeverity.Error;
+            Notify(message, longContent, NotificationSeverity.Error);
         if (severity == "2")
-            Notification.Severity = NotificationSeverity.Warning;
+            Notify(message, "Severity: " + severity, NotificationSeverity.Warning);
         if (severity == "3")
-            Notification.Severity = NotificationSeverity.Success;
+            Notify(message, "Severity: " + severity, NotificationSeverity.Success);
         if (severity == "4")
-            Notification.Severity = NotificationSeverity.Info;
+            Notify(message, "Severity: " + severity, NotificationSeverity.Info);
+
+        OnPropertyChanged(nameof(Notification));
+    }
+
+    private void Notify(string message, string content, NotificationSeverity severity) {
+        Notification = new Notification() {
+            Message = message,
+            Content = content,
+            Severity = severity,
+            IsOpen = true
+        };
 
         OnPropertyChanged(nameof(Notification));
     }

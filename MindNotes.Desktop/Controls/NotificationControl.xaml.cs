@@ -1,18 +1,12 @@
 using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Animations;
 using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 using MindNotes.Core.Models;
 using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Gaming.XboxLive.Storage;
-using Windows.UI.WebUI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,40 +14,17 @@ using Windows.UI.WebUI;
 namespace MindNotes.Desktop.Controls;
 public sealed partial class NotificationControl : UserControl {
 
-    public static readonly DependencyProperty IsOpenProperty =
+    public static readonly DependencyProperty NotificationProperty =
         DependencyProperty.RegisterAttached(
-            "IsOpen",
-            typeof(bool),
-            typeof(NotificationControl), 
-            new PropertyMetadata(false, IsOpenPropertyChanged)
-    );
-
-    public static readonly DependencyProperty NotificationContentProperty =
-        DependencyProperty.RegisterAttached(
-            "NotificationContent",
-            typeof(string),
+            "Notification",
+            typeof(Notification),
             typeof(NotificationControl),
-            new PropertyMetadata(string.Empty, NotificationContentPropertyChanged)
+            new PropertyMetadata(null, OnNotificationChanged)
     );
 
-    public static readonly DependencyProperty SeverityProperty = DependencyProperty.RegisterAttached(
-            "Severity",
-            typeof(NotificationSeverity),
-            typeof(NotificationControl),
-            new PropertyMetadata(NotificationSeverity.Info, SeverityPropertyChanged)
-    );
-
-    public bool IsOpen {
-        get { return (bool)GetValue(IsOpenProperty); }
-        set { SetValue(IsOpenProperty, value); }
-    }
-    public string NotificationContent {
-        get { return (string)GetValue(NotificationContentProperty); }
-        set { SetValue(NotificationContentProperty, value); }
-    }
-    public NotificationSeverity Severity {
-        get { return (NotificationSeverity)GetValue(SeverityProperty); }
-        set { SetValue(SeverityProperty, value); }
+    public Notification Notification {
+        get { return (Notification)GetValue(NotificationProperty); }
+        set { SetValue(NotificationProperty, value); }
     }
 
     private static DispatcherTimer _dismissNotificationTimer;
@@ -65,19 +36,11 @@ public sealed partial class NotificationControl : UserControl {
         _dismissNotificationTimer.Tick += _dismissNotificationTimer_Tick;
     }
 
-    private void _dismissNotificationTimer_Tick(object? sender, object e) {
-        Debug.WriteLine($"TICK: {sender}");
-
-        this.IsOpen = false;
-    }
-
-    private static void IsOpenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void SetIsOpenProperty(DependencyObject d, Notification notification) {
         var grid = d.FindDescendant("notificationPanel") as Grid;
         if (grid == null) return;
 
-        var isOpen = (bool)e.NewValue;
-
-        if (isOpen) {
+        if (notification.IsOpen) {
             grid.Visibility = Visibility.Visible;
             _dismissNotificationTimer.Start();
         } else {
@@ -86,22 +49,18 @@ public sealed partial class NotificationControl : UserControl {
         }
     }
 
-    private static void NotificationContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        var textblock = d.FindDescendant("txtNotificationContent") as TextBlock;
-        if (textblock == null) return;
-
-        var content = (string)e.NewValue;
-        textblock.Text = content;
-    }
-
-    private static void SeverityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void SetSeverityProperty(DependencyObject d, Notification notification) {
         var border = d.FindDescendant("innerPanel") as Border;
         if (border == null) return;
 
-        var severity = (NotificationSeverity)e.NewValue;
-        var gradient = GetSeverityBackgroundColor(severity);
+        var gradient = GetSeverityBackgroundColor(notification.Severity);
 
         border.Background = new LinearGradientBrush(gradient, 0);
+    }
+
+    private static void OnNotificationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        SetIsOpenProperty(d, e.NewValue as Notification);
+        SetSeverityProperty(d, e.NewValue as Notification);
     }
 
     private static GradientStopCollection GetSeverityBackgroundColor(NotificationSeverity severity) {
@@ -137,6 +96,11 @@ public sealed partial class NotificationControl : UserControl {
         notificationPanel.Visibility = Visibility.Collapsed;
     }
 
+    private void _dismissNotificationTimer_Tick(object? sender, object e) {
+        this.Notification.IsOpen = false;
+        SetIsOpenProperty(this, this.Notification);
+    }
+
     private void button_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
         this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
     }
@@ -158,10 +122,9 @@ public sealed partial class NotificationControl : UserControl {
             RequestedOperation = DataPackageOperation.Copy
         };
 
-        data.SetText(txtNotificationContent.Text);
+        var content = $"{Notification.Message}\n{Notification.Content}";
+
+        data.SetText(content);
         Clipboard.SetContent(data);
     }
-
-
-
 }
