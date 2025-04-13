@@ -18,10 +18,11 @@
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition MaxWidth="100" />
 				</Grid.ColumnDefinitions>
 
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
@@ -29,12 +30,14 @@
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
+
 				<TextBox x:Name="txtOllamaServer"
 						 Grid.Column="0"
 						 Grid.Row="0"
 						 Margin="0,0,5,24"
 						 Header="Ollama server"
 						 PlaceholderText="Ollama server address"
+						 ToolTipService.ToolTip="Ollama server address"
 						 Text="{Binding Settings.OllamaServerAddress}" />
 				<Button x:Name="btnTestOllamaServer"
 						Grid.Column="1"
@@ -44,6 +47,7 @@
 						HorizontalContentAlignment="Stretch"
 						VerticalContentAlignment="Stretch"
 						Margin="0,0,0,24"
+						ToolTipService.ToolTip="Test connection to Ollama server"
 						Command="{Binding TestOllamaConnectionCommand}"
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited">
@@ -93,23 +97,43 @@
 
 				</Button>
 
-
-				<TextBox x:Name="txtQdrantServer"
+				<TextBox x:Name="txtEmbeddingModelName"
 						 Grid.Column="0"
 						 Grid.Row="1"
 						 Margin="0,0,5,24"
+						 Header="Embedding model"
+						 PlaceholderText="Embedding model name"
+						 ToolTipService.ToolTip="Embedding model name"
+						 Text="{Binding Settings.EmbeddingModelName}" />
+
+				<NumberBox x:Name="txtVectorSize"
+						   Grid.Column="1"
+						   Grid.Row="1"
+						   Margin="0,0,5,24"
+						   Header="Vector size"
+						   PlaceholderText="Output vector size"
+						   ToolTipService.ToolTip="Output vector size"
+						   Text="{Binding Settings.OutputVectorSize}" />
+
+
+				<TextBox x:Name="txtQdrantServer"
+						 Grid.Column="0"
+						 Grid.Row="2"
+						 Margin="0,0,5,24"
 						 Header="Qdrant server"
 						 PlaceholderText="Qdrant server address"
+						 ToolTipService.ToolTip="Qdrant server address"
 						 Text="{Binding Settings.QdrantServerAddress}" />
 
 				<Button x:Name="btnTestQdrantServer"
 						Grid.Column="1"
-						Grid.Row="1"
+						Grid.Row="2"
 						HorizontalAlignment="Stretch"
 						VerticalAlignment="Bottom"
 						HorizontalContentAlignment="Stretch"
 						VerticalContentAlignment="Stretch"
 						Margin="0,0,0,24"
+						ToolTipService.ToolTip="Test connection to Qdrant database"
 						Command="{Binding TestQdrantConnectionCommand}"
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited">
@@ -159,18 +183,20 @@
 
 				<Button x:Name="btnSaveSettings"
 						Grid.Column="0"
-						Grid.Row="3"
+						Grid.Row="4"
 						Content="Save"
 						Width="100"
+						ToolTipService.ToolTip="Save current settings"
 						Command="{Binding SaveSettingsCommand}"
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited" />
 
 				<Button x:Name="btnCloseSettings"
 						Grid.Column="1"
-						Grid.Row="3"
+						Grid.Row="4"
 						Content="Close"
 						Width="100"
+						ToolTipService.ToolTip="Close settings panel and cancel changes"
 						Click="btnCloseSettings_Click"
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited" />

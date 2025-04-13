@@ -33,7 +33,9 @@ public partial class SettingsViewModel : ObservableObject {
     private void LoadConfiguration() {
         Settings = new Settings {
             OllamaServerAddress = _configuration["AppSettings:Ollama:Server"] ?? string.Empty,
-            QdrantServerAddress = _configuration["AppSettings:Qdrant:Server"] ?? string.Empty
+            QdrantServerAddress = _configuration["AppSettings:Qdrant:Server"] ?? string.Empty,
+            EmbeddingModelName = _configuration["AppSettings:Ollama:EmbeddingModel"] ?? string.Empty,
+            OutputVectorSize = _configuration["AppSettings:Ollama:OutputVectorSize"] ?? string.Empty
         };
     }
 
@@ -54,5 +56,7 @@ public partial class SettingsViewModel : ObservableObject {
     private void SaveSettings() {
         _configuration["AppSettings:Ollama:Server"] = Settings.OllamaServerAddress;
         _configuration["AppSettings:Qdrant:Server"] = Settings.QdrantServerAddress;
+        _configuration["AppSettings:Ollama:EmbeddingModel"] = Settings.EmbeddingModelName;
+        _configuration["AppSettings:Ollama:OutputVectorSize"] = Settings.OutputVectorSize;
     }
 }
