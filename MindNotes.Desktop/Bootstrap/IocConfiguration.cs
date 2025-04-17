@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MindNotes.Core.Application;
 using MindNotes.Core.Providers;
 using MindNotes.Core.Services;
 using MindNotes.Desktop.ViewModels;
@@ -17,6 +18,7 @@ public static class IocConfiguration {
 
     public static IServiceCollection RegisterServices(this IServiceCollection services) {
         services.AddSingleton<INotesService, NotesService>();
+        services.AddSingleton<INetworkService, NetworkService>();
 
         return services;
     }
@@ -33,6 +35,11 @@ public static class IocConfiguration {
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .Build());
 
+        return services;
+    }
+
+    public static IServiceCollection RegisterApplicationServices(this IServiceCollection services) {
+        services.AddSingleton<INotificationHub, NotificationHub>();
         return services;
     }
 }

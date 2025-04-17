@@ -115,21 +115,6 @@
 									  HorizontalAlignment="Left"
 									  VerticalAlignment="Top"
 									  Margin="36,12,0,12"
-									  Notification="{Binding Notification}"/>
-
-		<StackPanel VerticalAlignment="Center">
-			<Button Content="Show Error"
-					Command="{Binding ShowNotificationCommand}"
-					CommandParameter="1"/>
-			<Button Content="Show Warning"
-					Command="{Binding ShowNotificationCommand}"
-					CommandParameter="2"/>
-			<Button Content="Show Success"
-					Command="{Binding ShowNotificationCommand}"
-					CommandParameter="3"/>
-			<Button Content="Show Info"
-					Command="{Binding ShowNotificationCommand}"
-					CommandParameter="4"/>
-		</StackPanel>
+									  Notification="{Binding Notification}" />
 	</Grid>
 </UserControl>

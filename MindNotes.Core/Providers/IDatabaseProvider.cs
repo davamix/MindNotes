@@ -9,4 +9,5 @@ public interface IDatabaseProvider {
     Task DeleteNoteAsync(Guid id);
     Task<Note> GetNoteById(Guid id);
     Task<List<Note>> SearchNotes(QdrantQuery query, ulong limit = 10);
+    Task<bool> TestConnection();
 }

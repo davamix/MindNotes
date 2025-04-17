@@ -95,6 +95,11 @@ public class QdrantProvider : IDatabaseProvider {
         return notes;
     }
 
+    public async Task<bool> TestConnection() {
+        var health = await _client.HealthAsync();
+        return health.Version != null;
+    }
+
     private async Task<Note> SaveNoteAsync(Note note) {
         var result = await _client.UpsertAsync(
                     collectionName: _collection,
@@ -113,6 +118,8 @@ public class QdrantProvider : IDatabaseProvider {
 
         return note;
     }
+
+
 }
 
 public static class PayloadToNoteMapper {

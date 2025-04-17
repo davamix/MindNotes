@@ -2,7 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Grpc.Net.Client.Configuration;
 using Microsoft.Extensions.Configuration;
+using MindNotes.Core.Application;
 using MindNotes.Core.Models;
+using MindNotes.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +15,8 @@ using System.Threading.Tasks;
 namespace MindNotes.Desktop.ViewModels;
 public partial class SettingsViewModel : ObservableObject {
     private readonly IConfiguration _configuration;
-
+    private readonly INetworkService _networkService;
+    private readonly INotificationHub _notificationHub;
     [ObservableProperty]
     private Settings _settings = null;
 
@@ -24,8 +27,13 @@ public partial class SettingsViewModel : ObservableObject {
     private bool? _isQdrantConnected = null;
 
 
-    public SettingsViewModel(IConfiguration configuration) {
+    public SettingsViewModel(IConfiguration configuration,
+        INetworkService networkService,
+        INotificationHub notificationHub) {
+
         _configuration = configuration;
+        _networkService = networkService;
+        _notificationHub = notificationHub;
 
         LoadConfiguration();
     }
@@ -40,16 +48,49 @@ public partial class SettingsViewModel : ObservableObject {
     }
 
     [RelayCommand]
-    private void TestOllamaConnection(string address) {
-        Debug.WriteLine("Test Ollama connection command");
-        IsOllamaConnected = true;
+    private async void TestOllamaConnection(string address) {
+        try {
+            var isRunning = await _networkService.TestOllamaConnection();
 
+            _notificationHub.Notify(new Notification() {
+                Message = "Ollama connection test",
+                Content = isRunning ? "Ollama server is running." : "Ollama server is not running.",
+                Severity = isRunning ? NotificationSeverity.Success : NotificationSeverity.Error
+            });
+
+            IsOllamaConnected = isRunning;
+        } catch (Exception ex) {
+            _notificationHub.Notify(new Notification() {
+                Message = "Ollama connection test failed",
+                Content = ex.Message,
+                Severity = NotificationSeverity.Error
+            });
+
+            IsOllamaConnected = false;
+        }
     }
 
     [RelayCommand]
-    private void TestQdrantConnection(string address) {
-        Debug.WriteLine("Test Qdrant connection command");
-        IsQdrantConnected = false;
+    private async void TestQdrantConnection(string address) {
+        try {
+            var isRunning = await _networkService.TestQdrantConnection();
+
+            _notificationHub.Notify(new Notification() {
+                Message = "Qdrant connection test",
+                Content = isRunning ? "Qdrant server is running." : "Qdrant server is not running.",
+                Severity = isRunning ? NotificationSeverity.Success : NotificationSeverity.Error
+            });
+
+            IsQdrantConnected = isRunning;
+        } catch (Exception ex) {
+            _notificationHub.Notify(new Notification() {
+                Message = "Qdrant connection test failed",
+                Content = ex.Message,
+                Severity = NotificationSeverity.Error
+            });
+
+            IsQdrantConnected = false;
+        }
     }
 
     [RelayCommand]

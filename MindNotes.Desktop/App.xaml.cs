@@ -32,6 +32,7 @@ namespace MindNotes.Desktop {
                 .RegisterServices()
                 .RegisterViewModels()
                 .RegisterConfiguration()
+                .RegisterApplicationServices()
                 .BuildServiceProvider());
 
             ShowWindow();
