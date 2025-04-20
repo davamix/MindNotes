@@ -8,6 +8,7 @@
 			 xmlns:controls="using:MindNotes.Desktop.Controls"
 			 xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 			 xmlns:converters="using:MindNotes.Desktop.Converters"
+			 xmlns:dialogs="using:MindNotes.Desktop.Dialogs"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:StringToInfoBarSeverityConverter x:Key="stringToInfoBarServerityConverter" />
@@ -45,14 +46,16 @@
 			</Grid.RowDefinitions>
 
 			<!-- Search textbox -->
-			<AutoSuggestBox x:Name="txtSearch" Grid.Column="0"
+			<AutoSuggestBox x:Name="txtSearch"
+							Grid.Column="0"
 							Grid.Row="0"
 							Width="400"
 							QueryIcon="Find"
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center">
 				<interactivity:Interaction.Behaviors>
-					<interactivity:EventTriggerBehavior EventName="QuerySubmitted" SourceObject="{Binding ElementName=txtSearch}">
+					<interactivity:EventTriggerBehavior EventName="QuerySubmitted"
+														SourceObject="{Binding ElementName=txtSearch}">
 						<interactivity:InvokeCommandAction Command="{Binding SearchNotesCommand}"
 														   CommandParameter="{Binding ElementName=txtSearch, Path=Text}" />
 					</interactivity:EventTriggerBehavior>
@@ -65,8 +68,9 @@
 				</interactivity:Interaction.Behaviors>
 			</AutoSuggestBox>
 
-			<!-- Configuration button --> 
-			<Button x:Name="btnSettings" Grid.Column="1"
+			<!-- Configuration button -->
+			<Button x:Name="btnSettings"
+					Grid.Column="1"
 					Grid.Row="0"
 					Margin="5"
 					Background="Transparent"
@@ -96,7 +100,9 @@
 					</ItemsRepeater.Layout>
 					<ItemsRepeater.ItemTemplate>
 						<DataTemplate>
-							<controls:NoteControl DataContext="{Binding}" />
+							<controls:NoteControl DataContext="{Binding}"
+												  Height="300"
+												  Width="300" />
 						</DataTemplate>
 					</ItemsRepeater.ItemTemplate>
 				</ItemsRepeater>
@@ -116,5 +122,11 @@
 									  VerticalAlignment="Top"
 									  Margin="36,12,0,12"
 									  Notification="{Binding Notification}" />
+
+		<controls:BigNoteControl ShowNote="{Binding IsBigNoteShown, Mode=TwoWay}"
+								 Note="{Binding BigNote, Mode=TwoWay}"
+								 SaveCommand="{Binding UpdateNoteCommand}"
+								 DeleteCommand="{Binding DeleteNoteCommand}"
+								 Visibility="Collapsed"/>
 	</Grid>
 </UserControl>

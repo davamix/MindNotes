@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,12 +10,20 @@ public partial class NotesViewModel : ObservableObject {
 
 	[RelayCommand]
 	private async Task UpdateNote(Note note) {
-		await _notesService.UpdateNoteAsync(note);
+		if(note == null) {
+			Notify("Error on update note.", "Note is null.", NotificationSeverity.Error);
+			return;
+        }
 
+		await _notesService.UpdateNoteAsync(note);
+	
 		var updatedNote = new Note() { Id = note.Id, Content = note.Content };
 		var oldNoteIndex = Notes.IndexOf(note);
+		
 		Notes.Remove(note);
 		Notes.Insert(oldNoteIndex, updatedNote);
+
+		BigNote = updatedNote;
 	}
 
 	[RelayCommand]
@@ -64,4 +69,15 @@ public partial class NotesViewModel : ObservableObject {
 			LoadNotes();
 		}
 	}
+
+	[RelayCommand]
+    private void ShowBigNote(Note note) {
+		BigNote = note;
+        IsBigNoteShown= true;
+    }
+
+	[RelayCommand]
+    private void HideBigNote() {
+        IsBigNoteShown = false;
+    }
 }

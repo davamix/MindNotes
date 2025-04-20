@@ -18,6 +18,12 @@ public partial class NotesViewModel : ObservableObject {
     [ObservableProperty]
     private Notification notification;
 
+    [ObservableProperty]
+    private bool isBigNoteShown;
+
+    [ObservableProperty]
+    private Note bigNote;
+
     public NotesViewModel(INotesService notesService,
         INotificationHub notificationHub) {
         _notesService = notesService;
@@ -54,4 +60,6 @@ public partial class NotesViewModel : ObservableObject {
 
         OnPropertyChanged(nameof(Notification));
     }
+
+
 }
