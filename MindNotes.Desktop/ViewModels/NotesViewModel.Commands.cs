@@ -17,14 +17,12 @@ public partial class NotesViewModel : ObservableObject {
 
 		await _notesService.UpdateNoteAsync(note);
 	
-		var updatedNote = new Note() { Id = note.Id, Content = note.Content };
 		var oldNoteIndex = Notes.IndexOf(note);
-		
-		Notes.Remove(note);
-		Notes.Insert(oldNoteIndex, updatedNote);
+		Notes.Move(oldNoteIndex, 0);
 
-		BigNote = updatedNote;
-	}
+        BigNote = new Note() { Id = note.Id, Content = note.Content };
+        OnPropertyChanged(nameof(BigNote));
+    }
 
 	[RelayCommand]
 	private async Task AddNote() {

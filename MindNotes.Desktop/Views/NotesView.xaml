@@ -100,7 +100,10 @@
 					</ItemsRepeater.Layout>
 					<ItemsRepeater.ItemTemplate>
 						<DataTemplate>
-							<controls:NoteControl DataContext="{Binding}"
+							<controls:NoteControl Note="{Binding Mode=TwoWay}"
+												  SaveCommand="{Binding ElementName=notesList, Path=DataContext.UpdateNoteCommand}"
+												  DeleteCommand="{Binding ElementName=notesList, Path=DataContext.DeleteNoteCommand}"
+												  ShowNoteCommand="{Binding ElementName=notesList, Path=DataContext.ShowBigNoteCommand}"
 												  Height="300"
 												  Width="300" />
 						</DataTemplate>

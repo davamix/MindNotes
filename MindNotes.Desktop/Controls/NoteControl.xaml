@@ -5,7 +5,8 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d">
+			 mc:Ignorable="d"
+			 x:Name="noteControl">
 
 		<Grid>
 		<!-- Front view note (read-only) -->
@@ -42,7 +43,7 @@
 						<TextBlock x:Name="txtContentFront"
 								   ScrollViewer.VerticalScrollBarVisibility="Auto"
 								   TextWrapping="Wrap"
-								   Text="{Binding Content}" />
+								   Text="{Binding ElementName=noteControl, Path=Note.Content}" />
 					</ScrollViewer>
 
 				</Border>
@@ -77,8 +78,8 @@
 							ToolTipService.ToolTip="Maximize note"
 							PointerEntered="button_PointerEntered"
 							PointerExited="button_PointerExited"
-							Command="{Binding ElementName=notesList, Path=DataContext.ShowBigNoteCommand}"
-							CommandParameter="{Binding}">
+							Command="{Binding ElementName=noteControl, Path=ShowNoteCommand}"
+							CommandParameter="{Binding ElementName=noteControl, Path=Note}">
 						<FontIcon Glyph="&#xE740;" />
 					</Button>
 
@@ -90,8 +91,8 @@
 							PointerEntered="button_PointerEntered"
 							PointerExited="button_PointerExited"
 							Click="Delete_Click"
-							Command="{Binding ElementName=notesList, Path=DataContext.DeleteNoteCommand}"
-							CommandParameter="{Binding}">
+							Command="{Binding ElementName=noteControl, Path=DeleteCommand}"
+							CommandParameter="{Binding ElementName=noteControl, Path=Note}">
 						<FontIcon Glyph="&#xE74D;" />
 					</Button>
 				</Grid>
@@ -115,7 +116,7 @@
 						Shadow="{StaticResource shadowBorderBack}">
 
 					<TextBox x:Name="txtContentBack"
-							 Text="{Binding Content, Mode=TwoWay}"
+							 Text="{Binding ElementName=noteControl, Path=Note.Content, Mode=TwoWay}"
 							 TextWrapping="Wrap"
 							 AcceptsReturn="True"
 							 MaxLength="300"
@@ -134,8 +135,8 @@
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited"
 						Click="Save_Click"
-						Command="{Binding ElementName=notesList, Path=DataContext.UpdateNoteCommand}"
-						CommandParameter="{Binding}">
+						Command="{Binding ElementName=noteControl, Path=SaveCommand}"
+						CommandParameter="{Binding ElementName=noteControl, Path=Note}">
 					<FontIcon Glyph="&#xE74E;" />
 				</Button>
 

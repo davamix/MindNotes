@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using MindNotes.Core.Models;
 using Microsoft.UI.Input;
 using CommunityToolkit.Mvvm.Input;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,12 +21,13 @@ public sealed partial class BigNoteControl : UserControl {
         );
 
     public static readonly DependencyProperty NoteProperty =
-                DependencyProperty.RegisterAttached(
+        DependencyProperty.RegisterAttached(
             "Note",
             typeof(Note),
             typeof(BigNoteControl),
             new PropertyMetadata(null)
         );
+
 
     public static readonly DependencyProperty SaveCommandProperty =
         DependencyProperty.RegisterAttached(
@@ -116,14 +118,6 @@ public sealed partial class BigNoteControl : UserControl {
     }
 
     private static void OnSaveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        SetRelayCommand(d, e);
-    }
-
-    private static void OnDeleteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        SetRelayCommand(d, e);
-    }
-
-    private static void SetRelayCommand(DependencyObject d, DependencyPropertyChangedEventArgs e) {
         var control = d as BigNoteControl;
         if (control == null) return;
 
@@ -132,6 +126,17 @@ public sealed partial class BigNoteControl : UserControl {
 
         control.btnSave.Command = command;
         control.btnSave.CommandParameter = control.Note;
+    }
+
+    private static void OnDeleteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        var control = d as BigNoteControl;
+        if (control == null) return;
+
+        var command = e.NewValue as RelayCommand<Note>;
+        if (command == null) return;
+
+        control.btnDelete.Command = command;
+        control.btnDelete.CommandParameter = control.Note;
     }
 
     private void ShowBackView() {

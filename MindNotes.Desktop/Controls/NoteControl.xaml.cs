@@ -1,6 +1,8 @@
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using MindNotes.Core.Models;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -8,6 +10,57 @@ using System;
 
 namespace MindNotes.Desktop.Controls {
     public sealed partial class NoteControl : UserControl {
+        public static readonly DependencyProperty NoteProperty =
+        DependencyProperty.RegisterAttached(
+            "Note",
+            typeof(Note),
+            typeof(NoteControl),
+            new PropertyMetadata(null)
+        );
+
+        public static readonly DependencyProperty SaveCommandProperty =
+            DependencyProperty.RegisterAttached(
+                "SaveCommand",
+                typeof(RelayCommand<Note>),
+                typeof(NoteControl),
+                new PropertyMetadata(null, OnSaveCommandChanged)
+            );
+
+        public static readonly DependencyProperty DeleteCommandProperty =
+            DependencyProperty.RegisterAttached(
+                "DeleteCommand",
+                typeof(RelayCommand<Note>),
+                typeof(NoteControl),
+                new PropertyMetadata(null, OnDeleteCommandChanged)
+            );
+
+        public static readonly DependencyProperty ShowNoteCommandProperty =
+            DependencyProperty.RegisterAttached(
+                "ShowNoteCommand",
+                typeof(RelayCommand<Note>),
+                typeof(NoteControl),
+                new PropertyMetadata(null, OnShowNoteChanged)
+            );
+
+        public Note Note {
+            get { return (Note)GetValue(NoteProperty); }
+            set { SetValue(NoteProperty, value); }
+        }
+
+        public RelayCommand<Note> SaveCommand {
+            get { return (RelayCommand<Note>)GetValue(SaveCommandProperty); }
+            set { SetValue(SaveCommandProperty, value); }
+        }
+
+        public RelayCommand<Note> DeleteCommand {
+            get { return (RelayCommand<Note>)GetValue(DeleteCommandProperty); }
+            set { SetValue(DeleteCommandProperty, value); }
+        }
+
+        public RelayCommand<Note> ShowNoteCommand {
+            get { return (RelayCommand<Note>)GetValue(ShowNoteCommandProperty); }
+            set { SetValue(ShowNoteCommandProperty, value); }
+        }
 
         public NoteControl() {
             this.InitializeComponent();
@@ -42,6 +95,39 @@ namespace MindNotes.Desktop.Controls {
 
         private void txtContentBack_KeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e) {
             SetTextCounter();
+        }
+
+        private static void OnSaveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var control = d as NoteControl;
+            if (control == null) return;
+
+            var command = e.NewValue as RelayCommand<Note>;
+            if (command == null) return;
+
+            control.btnSave.Command = command;
+            control.btnSave.CommandParameter = control.Note;
+        }
+
+        private static void OnDeleteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var control = d as NoteControl;
+            if (control == null) return;
+
+            var command = e.NewValue as RelayCommand<Note>;
+            if (command == null) return;
+
+            control.btnDelete.Command = command;
+            control.btnDelete.CommandParameter = control.Note;
+        }
+
+        private static void OnShowNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var control = d as NoteControl;
+            if (control == null) return;
+
+            var command = e.NewValue as RelayCommand<Note>;
+            if (command == null) return;
+
+            control.btnMaximize.Command = command;
+            control.btnMaximize.CommandParameter = control.Note;
         }
 
         private void ShowBackView() {
