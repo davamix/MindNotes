@@ -10,7 +10,8 @@
 			 xmlns:models="using:MindNotes.Core.Models"
 			 xmlns:animations="using:CommunityToolkit.WinUI.Animations"
 			 mc:Ignorable="d"
-			 Loaded="notificationControl_Loaded">
+			 Loaded="notificationControl_Loaded"
+			 x:Name="notificationControl">
 	<UserControl.Resources>
 		<converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
 
@@ -83,7 +84,7 @@
 								Margin="0"
 										   TextWrapping="Wrap"
 										   IsTextSelectionEnabled="True"
-										   Text="{Binding Notification.Message}" />
+										   Text="{Binding ElementName=notificationControl, Path=Notification.Message}" />
 
 							</Expander.Header>
 							<Expander.Content>
@@ -92,7 +93,7 @@
 											   ScrollViewer.VerticalScrollBarVisibility="Auto"
 											   TextWrapping="Wrap"
 											   IsTextSelectionEnabled="True"
-											   Text="{Binding Notification.Content}" />
+											   Text="{Binding ElementName=notificationControl, Path=Notification.Content}" />
 								</ScrollViewer>
 							</Expander.Content>
 						</Expander>
