@@ -2,6 +2,7 @@
 using MindNotes.Core.Application;
 using MindNotes.Core.Models;
 using MindNotes.Core.Services;
+using System;
 using System.Collections.ObjectModel;
 
 namespace MindNotes.Desktop.ViewModels;
@@ -38,11 +39,16 @@ public partial class NotesViewModel : ObservableObject {
     private async void LoadNotes() {
         Notes.Clear();
 
-        var notes = await _notesService.GetNotesAsync();
+        try {
+            var notes = await _notesService.GetNotesAsync();
 
-        foreach (var note in notes) {
-            Notes.Insert(0, note);
+            foreach (var note in notes) {
+                Notes.Insert(0, note);
+            }
+        } catch (Exception ex) {
+            Notify("Error on load notes", ex.Message, NotificationSeverity.Error);
         }
+
     }
 
     private void Notify(string message, string content, NotificationSeverity severity) {

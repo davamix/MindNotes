@@ -46,28 +46,13 @@
 			</Grid.RowDefinitions>
 
 			<!-- Search textbox -->
-			<AutoSuggestBox x:Name="txtSearch"
-							Grid.Column="0"
-							Grid.Row="0"
-							Width="400"
-							QueryIcon="Find"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center">
-				<interactivity:Interaction.Behaviors>
-					<interactivity:EventTriggerBehavior EventName="QuerySubmitted"
-														SourceObject="{Binding ElementName=txtSearch}">
-						<interactivity:InvokeCommandAction Command="{Binding SearchNotesCommand}"
-														   CommandParameter="{Binding ElementName=txtSearch, Path=Text}" />
-					</interactivity:EventTriggerBehavior>
-
-					<interactivity:EventTriggerBehavior EventName="TextChanged"
-														SourceObject="{Binding ElementName=txtSearch}">
-						<interactivity:InvokeCommandAction Command="{Binding ReloadNotesCommand}"
-														   CommandParameter="{Binding ElementName=txtSearch, Path=Text}" />
-					</interactivity:EventTriggerBehavior>
-				</interactivity:Interaction.Behaviors>
-			</AutoSuggestBox>
-
+			<controls:SearchNoteControl Grid.Column="0"
+										Grid.Row="0"
+										Width="400"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+										SearchCommand="{Binding SearchNotesCommand}"/>
+			
 			<!-- Configuration button -->
 			<Button x:Name="btnSettings"
 					Grid.Column="1"
