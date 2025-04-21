@@ -13,26 +13,52 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Input;
+using CommunityToolkit.Mvvm.Input;
+using MindNotes.Core.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace MindNotes.Desktop.Controls
+namespace MindNotes.Desktop.Controls;
+
+public sealed partial class PromptControl : UserControl
 {
-    public sealed partial class PromptControl : UserControl
+    public static readonly DependencyProperty SaveCommandProperty =
+        DependencyProperty.RegisterAttached(
+            "SaveCommand",
+            typeof(RelayCommand<string>),
+            typeof(PromptControl),
+            new PropertyMetadata(null)
+        );
+
+    public static readonly DependencyProperty PromptContentProperty =
+       DependencyProperty.RegisterAttached(
+           "PromptContent",
+           typeof(string),
+           typeof(PromptControl),
+           new PropertyMetadata(null)
+       );
+
+    public RelayCommand<Note> SaveCommand {
+        get { return (RelayCommand<Note>)GetValue(SaveCommandProperty); }
+        set { SetValue(SaveCommandProperty, value); }
+    }
+
+    public string PromptContent {
+        get { return (string)GetValue(PromptContentProperty); }
+        set { SetValue(PromptContentProperty, value); }
+    }
+
+    public PromptControl()
     {
-        public PromptControl()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
+    }
 
-        private void button_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
-            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
-        }
+    private void button_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+    }
 
-        private void button_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
-            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
-        }
-
+    private void button_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
+        this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
     }
 }

@@ -5,7 +5,8 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d">
+			 mc:Ignorable="d"
+			 x:Name="promptControl">
 
 	<Grid>
 		<Border x:Name="promptBorder">
@@ -18,19 +19,21 @@
 					Shadow="{StaticResource shadowPromptBorder}">
 				<Grid>
 					<TextBox x:Name="txtPrompt"
-							 Text="{Binding PromptText, Mode=TwoWay}"
 							 TextWrapping="Wrap"
 							 AcceptsReturn="True"
-							 HorizontalAlignment="Stretch"/>
+							 HorizontalAlignment="Stretch"
+							 Text="{Binding ElementName=promptControl, Path=PromptContent, Mode=TwoWay}"/>
 
-					<Button Background="Transparent"
+					<Button x:Name="btnSave"
+							Background="Transparent"
 							BorderThickness="0"
 							Margin="5"
 							VerticalAlignment="Top"
 							HorizontalAlignment="Right"
 							PointerEntered="button_PointerEntered"
 							PointerExited="button_PointerExited"
-							Command="{Binding AddNoteCommand}">
+							Command="{Binding ElementName=promptControl, Path=SaveCommand}"
+							CommandParameter="{Binding ElementName=promptControl, Path=PromptContent}">
 						<FontIcon Glyph="&#xE74E;" />
 					</Button>
 				</Grid>

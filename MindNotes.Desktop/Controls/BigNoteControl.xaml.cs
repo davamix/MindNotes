@@ -34,7 +34,7 @@ public sealed partial class BigNoteControl : UserControl {
             "SaveCommand",
             typeof(RelayCommand<Note>),
             typeof(BigNoteControl),
-            new PropertyMetadata(null, OnSaveCommandChanged)
+            new PropertyMetadata(null)
         );
 
     public static readonly DependencyProperty DeleteCommandProperty =
@@ -42,7 +42,7 @@ public sealed partial class BigNoteControl : UserControl {
             "DeleteCommand",
             typeof(RelayCommand<Note>),
             typeof(BigNoteControl),
-            new PropertyMetadata(null, OnDeleteCommandChanged)
+            new PropertyMetadata(null)
         );
 
     public bool ShowNote {
@@ -115,28 +115,6 @@ public sealed partial class BigNoteControl : UserControl {
         } else {
             control.Visibility = Visibility.Collapsed;
         }
-    }
-
-    private static void OnSaveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        var control = d as BigNoteControl;
-        if (control == null) return;
-
-        var command = e.NewValue as RelayCommand<Note>;
-        if (command == null) return;
-
-        control.btnSave.Command = command;
-        control.btnSave.CommandParameter = control.Note;
-    }
-
-    private static void OnDeleteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        var control = d as BigNoteControl;
-        if (control == null) return;
-
-        var command = e.NewValue as RelayCommand<Note>;
-        if (command == null) return;
-
-        control.btnDelete.Command = command;
-        control.btnDelete.CommandParameter = control.Note;
     }
 
     private void ShowBackView() {

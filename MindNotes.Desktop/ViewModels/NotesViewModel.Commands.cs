@@ -25,14 +25,15 @@ public partial class NotesViewModel : ObservableObject {
     }
 
 	[RelayCommand]
-	private async Task AddNote() {
+	private async Task AddNote(string content) {
 		try {
-			var newNote = await _notesService.AddNoteAsync(PromptText);
+			var newNote = await _notesService.AddNoteAsync(content);
 
 			Notes.Insert(0, newNote);
-
 			PromptText = string.Empty;
-		} catch (Exception ex) {
+			OnPropertyChanged(nameof(PromptText));
+
+        } catch (Exception ex) {
 			Notify("Error on add note.", ex.Message, NotificationSeverity.Error);
 		}
 	}

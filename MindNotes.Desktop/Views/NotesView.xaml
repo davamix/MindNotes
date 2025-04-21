@@ -116,7 +116,9 @@
 		<controls:PromptControl Width="500"
 								Height="150"
 								HorizontalAlignment="Center"
-								VerticalAlignment="Bottom" />
+								VerticalAlignment="Bottom"
+								SaveCommand="{Binding AddNoteCommand}"
+								PromptContent="{Binding PromptText, Mode=TwoWay}"/>
 
 		<controls:NotificationControl Width="624"
 									  MinHeight="80"

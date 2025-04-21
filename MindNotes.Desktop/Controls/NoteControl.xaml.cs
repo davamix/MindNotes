@@ -23,7 +23,7 @@ namespace MindNotes.Desktop.Controls {
                 "SaveCommand",
                 typeof(RelayCommand<Note>),
                 typeof(NoteControl),
-                new PropertyMetadata(null, OnSaveCommandChanged)
+                new PropertyMetadata(null)
             );
 
         public static readonly DependencyProperty DeleteCommandProperty =
@@ -31,7 +31,7 @@ namespace MindNotes.Desktop.Controls {
                 "DeleteCommand",
                 typeof(RelayCommand<Note>),
                 typeof(NoteControl),
-                new PropertyMetadata(null, OnDeleteCommandChanged)
+                new PropertyMetadata(null)
             );
 
         public static readonly DependencyProperty ShowNoteCommandProperty =
@@ -39,7 +39,7 @@ namespace MindNotes.Desktop.Controls {
                 "ShowNoteCommand",
                 typeof(RelayCommand<Note>),
                 typeof(NoteControl),
-                new PropertyMetadata(null, OnShowNoteChanged)
+                new PropertyMetadata(null)
             );
 
         public Note Note {
@@ -95,39 +95,6 @@ namespace MindNotes.Desktop.Controls {
 
         private void txtContentBack_KeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e) {
             SetTextCounter();
-        }
-
-        private static void OnSaveCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as NoteControl;
-            if (control == null) return;
-
-            var command = e.NewValue as RelayCommand<Note>;
-            if (command == null) return;
-
-            control.btnSave.Command = command;
-            control.btnSave.CommandParameter = control.Note;
-        }
-
-        private static void OnDeleteCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as NoteControl;
-            if (control == null) return;
-
-            var command = e.NewValue as RelayCommand<Note>;
-            if (command == null) return;
-
-            control.btnDelete.Command = command;
-            control.btnDelete.CommandParameter = control.Note;
-        }
-
-        private static void OnShowNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var control = d as NoteControl;
-            if (control == null) return;
-
-            var command = e.NewValue as RelayCommand<Note>;
-            if (command == null) return;
-
-            control.btnMaximize.Command = command;
-            control.btnMaximize.CommandParameter = control.Note;
         }
 
         private void ShowBackView() {
