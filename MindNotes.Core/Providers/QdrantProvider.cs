@@ -1,20 +1,24 @@
 ﻿using Google.Protobuf.Collections;
 using Microsoft.Extensions.Configuration;
+using MindNotes.Core.Application;
 using MindNotes.Core.Models;
 using Qdrant.Client;
 using Qdrant.Client.Grpc;
+using System.Diagnostics;
 
 namespace MindNotes.Core.Providers;
 public class QdrantProvider : IDatabaseProvider {
 
     private readonly IConfiguration _configuration;
+    private readonly INotificationHub _notificationHub;
     QdrantClient _client;
     string _collection;
     ulong _embeddingsVectorSize;
 
-    public QdrantProvider(IConfiguration configuration) {
+    public QdrantProvider(IConfiguration configuration,
+        INotificationHub notificationHub) {
         _configuration = configuration;
-
+        _notificationHub = notificationHub;
         Task.Run(Initialize).Wait();
     }
 
@@ -23,18 +27,27 @@ public class QdrantProvider : IDatabaseProvider {
         _collection = _configuration["AppSettings:Qdrant:Collection"];
         _embeddingsVectorSize = ulong.Parse(_configuration["AppSettings:Ollama:OutputVectorSize"]);
 
-        await CreateCollection();
+        await CreateInitialCollection();
     }
 
-    private async Task CreateCollection() {
-        var collections = await _client.ListCollectionsAsync();
+    private async Task CreateInitialCollection() {
+        try {
+            var collections = await _client.ListCollectionsAsync();
 
-        if (collections.Any(c => c == _collection)) return;
+            if (collections.Any(c => c == _collection)) return;
 
-        await _client.CreateCollectionAsync(_collection, new VectorParams {
-            Size = _embeddingsVectorSize,
-            Distance = Distance.Cosine
-        });
+            await _client.CreateCollectionAsync(_collection, new VectorParams {
+                Size = _embeddingsVectorSize,
+                Distance = Distance.Cosine
+            });
+        } catch (Exception ex) {
+            _notificationHub.Register(
+                new Notification() {
+                    Message = "Error on create initial collection",
+                    Content = ex.Message,
+                    Severity = NotificationSeverity.Error
+                });
+        }
     }
 
     public async Task<Note> AddNoteAsync(Note note) {
@@ -42,11 +55,20 @@ public class QdrantProvider : IDatabaseProvider {
         note.CreatedAt = DateTime.UtcNow;
         note.UpdatedAt = DateTime.UtcNow;
 
-        return await SaveNoteAsync(note);
+        try {
+            return await SaveNoteAsync(note);
+        } catch {
+            throw;
+        }
+
     }
 
     public async Task DeleteNoteAsync(Guid id) {
-        _ = await _client.DeleteAsync(_collection, id);
+        try {
+            _ = await _client.DeleteAsync(_collection, id);
+        } catch {
+            throw;
+        }
     }
 
     public Task<Note> GetNoteById(Guid id) {
@@ -56,52 +78,69 @@ public class QdrantProvider : IDatabaseProvider {
     public async Task<List<Note>> GetNotes(Guid offsetId = default) {
         var notes = new List<Note>();
 
-        var result = await _client.ScrollAsync(
-            collectionName: _collection,
-            limit: 50,
-            offset: offsetId == Guid.Empty ? null : offsetId,
-            payloadSelector: true);
+        try {
+            var result = await _client.ScrollAsync(
+                        collectionName: _collection,
+                        limit: 50,
+                        offset: offsetId == Guid.Empty ? null : offsetId,
+                        payloadSelector: true);
 
-        foreach (var value in result.Result) {
-            var note = value.Payload.ToNote();
-            note.Id = Guid.Parse(value.Id.Uuid);
-            notes.Add(note);
+            foreach (var value in result.Result) {
+                var note = value.Payload.ToNote();
+                note.Id = Guid.Parse(value.Id.Uuid);
+                notes.Add(note);
+            }
+
+            return notes;
+        } catch {
+            throw;
         }
-
-        return notes;
     }
 
     public async Task UpdateNoteAsync(Note note) {
         note.UpdatedAt = DateTime.UtcNow;
 
-        _ = await SaveNoteAsync(note);
+        try {
+            _ = await SaveNoteAsync(note);
+        } catch {
+            throw;
+        }
     }
 
     public async Task<List<Note>> SearchNotes(QdrantQuery query, ulong limit = 10) {
         var notes = new List<Note>();
 
-        var result = await _client.QueryAsync(
-            collectionName: _collection,
-            query: query.VectorQuery,
-            limit: limit);
+        try {
+            var result = await _client.QueryAsync(
+                        collectionName: _collection,
+                        query: query.VectorQuery,
+                        limit: limit);
 
-        foreach (var value in result) {
-            //if (value.Score < 0.5) continue;
-            var note = value.Payload.ToNote();
-            note.Id = Guid.Parse(value.Id.Uuid);
-            notes.Add(note);
+            foreach (var value in result) {
+                //if (value.Score < 0.5) continue;
+                var note = value.Payload.ToNote();
+                note.Id = Guid.Parse(value.Id.Uuid);
+                notes.Add(note);
+            }
+
+            return notes;
+        } catch {
+            throw;
         }
-
-        return notes;
     }
 
     public async Task<bool> TestConnection() {
-        var health = await _client.HealthAsync();
-        return health.Version != null;
+        try {
+            var health = await _client.HealthAsync();
+            return health.Version != null;
+        } catch {
+            throw;
+        }
     }
 
     private async Task<Note> SaveNoteAsync(Note note) {
-        var result = await _client.UpsertAsync(
+        try {
+            var result = await _client.UpsertAsync(
                     collectionName: _collection,
                     points: new List<PointStruct> {
                 new() {
@@ -116,10 +155,11 @@ public class QdrantProvider : IDatabaseProvider {
                 }
                     });
 
-        return note;
+            return note;
+        } catch {
+            throw;
+        }
     }
-
-
 }
 
 public static class PayloadToNoteMapper {

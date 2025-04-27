@@ -15,13 +15,17 @@ public partial class NotesViewModel : ObservableObject {
             return;
         }
 
-        await _notesService.UpdateNoteAsync(note);
+        try {
+            await _notesService.UpdateNoteAsync(note);
 
-        var oldNoteIndex = Notes.IndexOf(note);
-        Notes.Move(oldNoteIndex, 0);
+            var oldNoteIndex = Notes.IndexOf(note);
+            Notes.Move(oldNoteIndex, 0);
 
-        BigNote = new Note() { Id = note.Id, Content = note.Content };
-        OnPropertyChanged(nameof(BigNote));
+            BigNote = new Note() { Id = note.Id, Content = note.Content };
+            OnPropertyChanged(nameof(BigNote));
+        } catch (Exception ex) {
+            Notify("Error on update note.", ex.Message, NotificationSeverity.Error);
+        }
     }
 
     [RelayCommand]
@@ -64,8 +68,6 @@ public partial class NotesViewModel : ObservableObject {
                 Notify("Error on search notes.", ex.Message, NotificationSeverity.Error);
             }
         }
-
-
     }
 
     [RelayCommand]

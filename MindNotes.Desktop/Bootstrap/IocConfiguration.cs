@@ -26,6 +26,7 @@ public static class IocConfiguration {
     public static IServiceCollection RegisterViewModels(this IServiceCollection services) {
         services.AddTransient<NotesViewModel>();
         services.AddTransient<SettingsViewModel>();
+        services.AddTransient<NotificationsViewModel>();
 
         return services;
     }

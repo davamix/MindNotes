@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="MindNotes.Desktop.Views.NotificationsView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="using:MindNotes.Desktop.Views"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:converters="using:MindNotes.Desktop.Converters"
+			 mc:Ignorable="d"
+			 x:Name="notificationsView"
+			 Loaded="notificationsView_Loaded">
+
+	<UserControl.Resources>
+		<converters:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+		<converters:SeverityToBrushColorConverter x:Key="severityToBrushColorConverter" />
+
+		<Style x:Key="notificationBorderStyle"
+			   TargetType="Border">
+			<Setter Property="BorderBrush">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0,0"
+										 EndPoint="1,1">
+						<GradientStop Color="#7AA1D2"
+									  Offset="0" />
+						<GradientStop Color="#DBD4B4"
+									  Offset="0.5" />
+						<GradientStop Color="#CC95C0"
+									  Offset="1" />
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
+
+	<Grid x:Name="notificationPanel"
+		  Visibility="{Binding ShowNotificationPanel, Converter={StaticResource booleanToVisibilityConverter}}">
+		<Border>
+			<Border.Resources>
+				<ThemeShadow x:Name="shadowBorder" />
+			</Border.Resources>
+
+			<Grid>
+				<Border x:Name="innerPanel"
+						CornerRadius="8"
+						Padding="0,16,0,16"
+						Translation="0,0,32"
+						Shadow="{StaticResource shadowBorder}"
+						BorderThickness="1"
+						BorderBrush="WhiteSmoke">
+
+					<Border.Resources>
+						<ThemeShadow x:Name="shadowBorderFront" />
+
+						<Storyboard x:Name="fadeInButtonsStoryboard">
+							<DoubleAnimation Storyboard.TargetProperty="Opacity"
+											 From="0"
+											 To="1"
+											 Duration="0:0:0.5" />
+						</Storyboard>
+
+						<Storyboard x:Name="fadeOutButtonsStoryboard">
+							<DoubleAnimation Storyboard.TargetProperty="Opacity"
+											 From="1"
+											 To="0"
+											 Duration="0:0:0.5" />
+						</Storyboard>
+					</Border.Resources>
+
+					<ListView x:Name="notificationList"
+							  ItemsSource="{Binding Path=Notifications}"
+							  SelectionMode="None">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Border Background="{Binding Severity, Converter={StaticResource severityToBrushColorConverter}}"
+										Margin="0,0,0,6"
+										Padding="6"
+										CornerRadius="5"
+										PointerEntered="notificationItem_PointerEntered"
+										PointerExited="notificationItem_PointerExited">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="Auto" />
+										</Grid.ColumnDefinitions>
+
+										<Expander  Grid.Column="0"
+												   HorizontalAlignment="Stretch"
+												   HorizontalContentAlignment="Stretch">
+											<Expander.Header>
+												<TextBlock Margin="0"
+														   TextWrapping="Wrap"
+														   IsTextSelectionEnabled="True"
+														   Text="{Binding Message}" />
+
+											</Expander.Header>
+											<Expander.Content>
+												<ScrollViewer>
+													<TextBlock ScrollViewer.VerticalScrollBarVisibility="Auto"
+															   TextWrapping="Wrap"
+															   IsTextSelectionEnabled="True"
+															   Text="{Binding Content}" />
+												</ScrollViewer>
+											</Expander.Content>
+										</Expander>
+
+										<StackPanel Grid.Column="1"
+													Orientation="Horizontal"
+													Opacity="0">
+											<Button Background="Transparent"
+													BorderThickness="0"
+													VerticalAlignment="Center"
+													HorizontalAlignment="Stretch"
+													PointerEntered="button_PointerEntered"
+													PointerExited="button_PointerExited"
+													Command="{Binding ElementName=notificationList, Path=DataContext.CopyNotificationCommand}"
+													CommandParameter="{Binding}">
+												<FontIcon Glyph="&#xE8C8;" />
+											</Button>
+
+											<Button Background="Transparent"
+													BorderThickness="0"
+													VerticalAlignment="Center"
+													HorizontalAlignment="Stretch"
+													PointerEntered="button_PointerEntered"
+													PointerExited="button_PointerExited"
+													Command="{Binding ElementName=notificationList, Path=DataContext.DeleteNotificationCommand}"
+													CommandParameter="{Binding}">
+												<FontIcon Glyph="&#xE10A;" />
+											</Button>
+										</StackPanel>
+
+									</Grid>
+								</Border>
+
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+
+				</Border>
+			</Grid>
+		</Border>
+	</Grid>
+</UserControl>

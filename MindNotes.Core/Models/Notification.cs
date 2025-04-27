@@ -18,4 +18,9 @@ public class Notification {
     public string Content { get; set; } = string.Empty;
     public bool IsOpen { get; set; } = false;
     public NotificationSeverity Severity { get; set; } = NotificationSeverity.Info;
+    public DateTime CreatedAt { get; }
+
+    public Notification() {
+        CreatedAt = DateTime.UtcNow;
+    }
 }

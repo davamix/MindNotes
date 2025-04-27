@@ -1,10 +1,5 @@
 ﻿using MindNotes.Core.Models;
 using MindNotes.Core.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MindNotes.Core.Services;
 
@@ -16,6 +11,7 @@ public interface INotesService {
     Task DeleteNoteAsync(Guid id);
     Task<IList<Note>> SearchNotesAsync(string query, ulong limit = 10);
 }
+
 public class NotesService : INotesService {
 
     private readonly IDatabaseProvider _provider;
@@ -28,38 +24,62 @@ public class NotesService : INotesService {
     }
 
     public async Task<Note> AddNoteAsync(string content) {
-        var embeddings = await _embeddingsProvider.GenerateEmbeddings(content);
+        try {
+            var embeddings = await _embeddingsProvider.GenerateEmbeddings(content);
 
-        return await _provider.AddNoteAsync(new() {
-            Content = content,
-            Embeddings = embeddings,
-        });
+            return await _provider.AddNoteAsync(new() {
+                Content = content,
+                Embeddings = embeddings,
+            });
+        } catch {
+            throw;
+        }
     }
 
     public async Task UpdateNoteAsync(Note note) {
-        var embeddings = await _embeddingsProvider.GenerateEmbeddings(note.Content);
-        note.Embeddings = embeddings;
-        
-        await _provider.UpdateNoteAsync(note);
+        try {
+            var embeddings = await _embeddingsProvider.GenerateEmbeddings(note.Content);
+            note.Embeddings = embeddings;
+
+            await _provider.UpdateNoteAsync(note);
+        } catch {
+            throw;
+        }
     }
 
     public async Task DeleteNoteAsync(Guid id) {
-        await _provider.DeleteNoteAsync(id);
+        try {
+            await _provider.DeleteNoteAsync(id);
+        } catch {
+            throw;
+        }
     }
 
     public async Task<Note> GetNoteByIdAsync(Guid id) {
-        return await _provider.GetNoteById(id);
+        try {
+            return await _provider.GetNoteById(id);
+        } catch {
+            throw;
+        }
     }
 
     public async Task<IList<Note>> GetNotesAsync() {
-        return await _provider.GetNotes();
+        try {
+            return await _provider.GetNotes();
+        } catch {
+            throw;
+        }
     }
 
     public async Task<IList<Note>> SearchNotesAsync(string query, ulong limit = 10) {
-        var embeddings = await _embeddingsProvider.GenerateEmbeddings(query);
+        try {
+            var embeddings = await _embeddingsProvider.GenerateEmbeddings(query);
 
-        var qdrantQuery = new QdrantQuery(embeddings, query);
+            var qdrantQuery = new QdrantQuery(embeddings, query);
 
-        return await _provider.SearchNotes(qdrantQuery, limit);
+            return await _provider.SearchNotes(qdrantQuery, limit);
+        } catch {
+            throw;
+        }
     }
 }

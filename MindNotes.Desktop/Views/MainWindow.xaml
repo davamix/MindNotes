@@ -22,6 +22,14 @@
 						 Grid.Column="1"
 						 Width="500"
 						 Visibility="Collapsed"/>
+
+		<uc:NotificationsView x:Name="notificationsViewControl"
+							  Width="624"
+							  MinHeight="80"
+							  MaxHeight="200"
+							  HorizontalAlignment="Left"
+							  VerticalAlignment="Top"
+							  Margin="36,12,0,12" />
 	</Grid>
 
 </Window>

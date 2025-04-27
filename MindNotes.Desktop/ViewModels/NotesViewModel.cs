@@ -17,9 +17,6 @@ public partial class NotesViewModel : ObservableObject {
     private string promptText;
 
     [ObservableProperty]
-    private Notification notification;
-
-    [ObservableProperty]
     private bool isBigNoteShown;
 
     [ObservableProperty]
@@ -29,10 +26,6 @@ public partial class NotesViewModel : ObservableObject {
         INotificationHub notificationHub) {
         _notesService = notesService;
         _notificationHub = notificationHub;
-
-        _notificationHub.NotificationReceived += ShowNotification;
-        notification = new Notification();
-
         LoadNotes();
     }
 
@@ -48,24 +41,13 @@ public partial class NotesViewModel : ObservableObject {
         } catch (Exception ex) {
             Notify("Error on load notes", ex.Message, NotificationSeverity.Error);
         }
-
     }
 
     private void Notify(string message, string content, NotificationSeverity severity) {
-        ShowNotification(new Notification() {
+        _notificationHub.Notify(new Notification() {
             Message = message,
             Content = content,
             Severity = severity
         });
     }
-
-    private void ShowNotification(Notification notification) {
-        notification.IsOpen = true;
-
-        Notification = notification;
-
-        OnPropertyChanged(nameof(Notification));
-    }
-
-
 }
