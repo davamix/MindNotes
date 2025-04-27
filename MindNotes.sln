@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindNotes.Desktop", "MindNo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindNotes.Core", "MindNotes.Core\MindNotes.Core.csproj", "{376BFCEC-78ED-43C9-BE40-9663C109BA5D}"
 EndProject
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "MindNotes (Package)", "MindNotes\MindNotes (Package)\MindNotes (Package).wapproj", "{6E9444FF-1375-4944-9545-C707A415210E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -47,6 +49,24 @@ Global
 		{376BFCEC-78ED-43C9-BE40-9663C109BA5D}.Release|x64.Build.0 = Release|Any CPU
 		{376BFCEC-78ED-43C9-BE40-9663C109BA5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{376BFCEC-78ED-43C9-BE40-9663C109BA5D}.Release|x86.Build.0 = Release|Any CPU
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x64.ActiveCfg = Debug|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x64.Build.0 = Debug|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x64.Deploy.0 = Debug|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x86.ActiveCfg = Debug|x86
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x86.Build.0 = Debug|x86
+		{6E9444FF-1375-4944-9545-C707A415210E}.Debug|x86.Deploy.0 = Debug|x86
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|ARM64.Build.0 = Release|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|ARM64.Deploy.0 = Release|ARM64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x64.ActiveCfg = Release|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x64.Build.0 = Release|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x64.Deploy.0 = Release|x64
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x86.ActiveCfg = Release|x86
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x86.Build.0 = Release|x86
+		{6E9444FF-1375-4944-9545-C707A415210E}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
