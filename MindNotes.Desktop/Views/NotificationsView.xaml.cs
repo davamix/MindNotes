@@ -61,6 +61,8 @@ public sealed partial class NotificationsView : UserControl {
         } else {
             _dismissNotificationTimer.Start();
         }
+
+        notificationPanel.Visibility = Visibility.Visible;
     }
 
     private void _dismissNotificationTimer_Tick(object? sender, object e) {
