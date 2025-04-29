@@ -125,7 +125,7 @@
 													PointerExited="button_PointerExited"
 													Command="{Binding ElementName=notificationList, Path=DataContext.DeleteNotificationCommand}"
 													CommandParameter="{Binding}">
-												<FontIcon Glyph="&#xE10A;" />
+												<FontIcon Glyph="&#xE8BB;" />
 											</Button>
 										</StackPanel>
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -71,9 +72,17 @@ public partial class NotesViewModel : ObservableObject {
     }
 
     [RelayCommand]
+    private void SmartSearch(string query) {
+        BigNote = new Note() { Content = "SmartSearchCommand called with query: " + query };
+        IsBigNoteShown = true;
+        IsSmartNote = true;
+    }
+
+    [RelayCommand]
     private void ShowBigNote(Note note) {
         BigNote = note;
         IsBigNoteShown = true;
+        IsSmartNote = false;
     }
 
     [RelayCommand]

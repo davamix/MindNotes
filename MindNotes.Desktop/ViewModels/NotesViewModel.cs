@@ -22,6 +22,9 @@ public partial class NotesViewModel : ObservableObject {
     [ObservableProperty]
     private Note bigNote;
 
+    [ObservableProperty]
+    private bool isSmartNote;
+
     public NotesViewModel(INotesService notesService,
         INotificationHub notificationHub) {
         _notesService = notesService;

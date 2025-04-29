@@ -45,6 +45,15 @@ public sealed partial class BigNoteControl : UserControl {
             new PropertyMetadata(null)
         );
 
+    public static readonly DependencyProperty IsSmartNoteProperty = 
+        DependencyProperty.RegisterAttached(
+            "IsSmartNote",
+            typeof(bool),
+            typeof(BigNoteControl),
+            new PropertyMetadata(false, OnSmartNotePropertyChanged)
+        );
+
+
     public bool ShowNote {
         get { return (bool)GetValue(ShowNoteProperty); }
         set { SetValue(ShowNoteProperty, value); }
@@ -65,6 +74,11 @@ public sealed partial class BigNoteControl : UserControl {
         set { SetValue(DeleteCommandProperty, value); }
     }
 
+    public bool IsSmartNote {
+        get { return (bool)GetValue(IsSmartNoteProperty); }
+        set { SetValue(IsSmartNoteProperty, value); }
+    }
+
     public BigNoteControl() {
         this.InitializeComponent();
     }
@@ -78,6 +92,10 @@ public sealed partial class BigNoteControl : UserControl {
     }
     private void Delete_Click(object sender, RoutedEventArgs e) {
         ShowFrontView();
+        ShowNote = false;
+    }
+
+    private void btnMinimize_Click(object sender, RoutedEventArgs e) {
         ShowNote = false;
     }
 
@@ -114,6 +132,27 @@ public sealed partial class BigNoteControl : UserControl {
             control.Visibility = Visibility.Visible;
         } else {
             control.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private static void OnSmartNotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        var control = d as BigNoteControl;
+        if (control == null) return;
+
+        var isSmartNote = (bool)e.NewValue;
+        if (isSmartNote) {
+            control.btnEdit.Visibility = Visibility.Collapsed;
+            control.btnDelete.Visibility = Visibility.Collapsed;
+            control.btnSave.Visibility = Visibility.Collapsed;
+            control.btnMinimize.Visibility = Visibility.Collapsed;
+            control.btnClose.Visibility = Visibility.Visible;
+
+        } else {
+            control.btnEdit.Visibility = Visibility.Visible;
+            control.btnDelete.Visibility = Visibility.Visible;
+            control.btnSave.Visibility = Visibility.Visible;
+            control.btnMinimize.Visibility = Visibility.Visible;
+            control.btnClose.Visibility = Visibility.Collapsed;
         }
     }
 

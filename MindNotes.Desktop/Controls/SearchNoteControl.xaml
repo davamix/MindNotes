@@ -67,7 +67,8 @@
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited"
 						Command="{Binding ElementName=searchBarCotrol, Path=SearchCommand}"
-						CommandParameter="{Binding ElementName=txtSearchText, Path=Text}">
+						CommandParameter="{Binding ElementName=txtSearchText, Path=Text}"
+						ToolTipService.ToolTip="Search">
 					<FontIcon Glyph="&#xE721;" />
 				</Button>
 
@@ -75,7 +76,9 @@
 						BorderThickness="0"
 						PointerEntered="button_PointerEntered"
 						PointerExited="button_PointerExited"
-						Command="{Binding ElementName=searchBarCotrol, Path=SmartSearchCommand}">
+						Command="{Binding ElementName=searchBarCotrol, Path=SmartSearchCommand}"
+						CommandParameter="{Binding ElementName=txtSearchText, Path=Text}"
+						ToolTipService.ToolTip="Smart search">
 					<FontIcon Glyph="&#xE99A;" />
 				</Button>
 			</StackPanel>

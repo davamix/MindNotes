@@ -51,7 +51,8 @@
 										Width="400"
 										HorizontalAlignment="Center"
 										VerticalAlignment="Center"
-										SearchCommand="{Binding SearchNotesCommand}"/>
+										SearchCommand="{Binding SearchNotesCommand}"
+										SmartSearchCommand="{Binding SmartSearchCommand}"/>
 			
 			<!-- Configuration button -->
 			<Button x:Name="btnSettings"
@@ -109,6 +110,7 @@
 								 Note="{Binding BigNote, Mode=TwoWay}"
 								 SaveCommand="{Binding UpdateNoteCommand}"
 								 DeleteCommand="{Binding DeleteNoteCommand}"
+								 IsSmartNote="{Binding IsSmartNote}"
 								 Visibility="Collapsed"/>
 	</Grid>
 </UserControl>

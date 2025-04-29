@@ -58,6 +58,7 @@
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 						<!-- Empty space row -->
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
@@ -72,19 +73,30 @@
 							Click="Edit_Click">
 						<FontIcon Glyph="&#xE70F;" />
 					</Button>
-					<Button x:Name="btnClose"
+					<Button x:Name="btnMinimize"
 							Grid.Row="1"
 							Background="Transparent"
 							BorderThickness="0"
 							ToolTipService.ToolTip="Minimize note"
 							PointerEntered="button_PointerEntered"
 							PointerExited="button_PointerExited"
-							Click="btnClose_Click">
+							Click="btnMinimize_Click">
 						<FontIcon Glyph="&#xE73F;" />
+					</Button>
+					<Button x:Name="btnClose"
+							Grid.Row="2"
+							Background="Transparent"
+							BorderThickness="0"
+							ToolTipService.ToolTip="Close note"
+							PointerEntered="button_PointerEntered"
+							PointerExited="button_PointerExited"
+							Click="btnClose_Click"
+							Visibility="Collapsed">
+						<FontIcon Glyph="&#xE8BB;" />
 					</Button>
 
 					<Button x:Name="btnDelete"
-							Grid.Row="3"
+							Grid.Row="4"
 							Background="Transparent"
 							BorderThickness="0"
 							ToolTipService.ToolTip="Delete note"
