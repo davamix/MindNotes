@@ -1,6 +1,6 @@
 # MindNotes (WIP)
 
-WinUI 3 application to write notes. Only plain text atm.
+WinUI 3 application to take notes. Only plain text atm.
 
 
 # Requirements
