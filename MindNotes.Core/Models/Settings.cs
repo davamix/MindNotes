@@ -10,4 +10,5 @@ public class Settings {
     public string QdrantServerAddress { get; set; } = string.Empty;
     public string EmbeddingModelName { get; set; } = string.Empty;
     public string OutputVectorSize { get; set; } = string.Empty;
+    public string LlmModelName { get; set; } = string.Empty;
 }

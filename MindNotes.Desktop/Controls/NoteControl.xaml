@@ -43,7 +43,8 @@
 						<TextBlock x:Name="txtContentFront"
 								   ScrollViewer.VerticalScrollBarVisibility="Auto"
 								   TextWrapping="Wrap"
-								   Text="{Binding ElementName=noteControl, Path=Note.Content}" />
+								   Text="{Binding ElementName=noteControl, Path=Note.Content}"
+								   IsTextSelectionEnabled="True"/>
 					</ScrollViewer>
 
 				</Border>

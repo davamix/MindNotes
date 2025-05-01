@@ -4,7 +4,6 @@ using MindNotes.Core.Application;
 using MindNotes.Core.Models;
 using Qdrant.Client;
 using Qdrant.Client.Grpc;
-using System.Diagnostics;
 
 namespace MindNotes.Core.Providers;
 public class QdrantProvider : IDatabaseProvider {

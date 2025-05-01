@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -72,10 +73,31 @@ public partial class NotesViewModel : ObservableObject {
     }
 
     [RelayCommand]
-    private void SmartSearch(string query) {
-        BigNote = new Note() { Content = "SmartSearchCommand called with query: " + query };
-        IsBigNoteShown = true;
-        IsSmartNote = true;
+    private async Task SmartSearch(string query) {
+        // TODO:
+        // Replace BigNote control by an SmartNote control
+        // to support streaming text and content source
+        try {
+            var sb = new StringBuilder();
+            
+            await foreach(var response in _notesService.SmartSearchNoteAsync(query)) {
+                //await Task.Delay(1);
+                sb.Append(response);
+                //BigNote.Content += response;
+                //OnPropertyChanged(nameof(BigNote));
+
+            }
+
+            BigNote = new Note() {
+                Content = sb.ToString()
+            };
+            IsBigNoteShown = true;
+            IsSmartNote = true;
+
+
+        } catch (Exception ex) {
+            Notify("Error on smart search.", ex.Message, NotificationSeverity.Error);
+        }
     }
 
     [RelayCommand]

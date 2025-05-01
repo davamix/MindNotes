@@ -11,7 +11,8 @@ public static class IocConfiguration {
     public static IServiceCollection RegisterProviders(this IServiceCollection services) {
         //services.AddSingleton<IProvider, FakeProvider>();
         services.AddSingleton<IDatabaseProvider, QdrantProvider>();
-        services.AddSingleton<IEmbeddingsProvider, OllamaEmbeddingsProvider>();
+        services.AddSingleton<IEmbeddingsProvider, EmbeddingsProvider>();
+        services.AddSingleton<ILlmProvider, LlmProvider>();
 
         return services;
     }
