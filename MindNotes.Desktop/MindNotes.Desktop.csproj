@@ -81,6 +81,11 @@
     <Folder Include="Behaviors\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\SmartNoteControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\NotificationsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -74,27 +74,15 @@ public partial class NotesViewModel : ObservableObject {
 
     [RelayCommand]
     private async Task SmartSearch(string query) {
-        // TODO:
-        // Replace BigNote control by an SmartNote control
-        // to support streaming text and content source
         try {
-            var sb = new StringBuilder();
-            
-            await foreach(var response in _notesService.SmartSearchNoteAsync(query)) {
-                //await Task.Delay(1);
-                sb.Append(response);
-                //BigNote.Content += response;
-                //OnPropertyChanged(nameof(BigNote));
+            IsSmartNoteShown = true;
 
+            await foreach(var response in _notesService.SmartSearchNoteAsync(query)) {
+                await Task.Delay(1);
+                SmartNoteContent = response;
             }
 
-            BigNote = new Note() {
-                Content = sb.ToString()
-            };
-            IsBigNoteShown = true;
-            IsSmartNote = true;
-
-
+            _smartNoteContentStream.Clear();
         } catch (Exception ex) {
             Notify("Error on smart search.", ex.Message, NotificationSeverity.Error);
         }
@@ -104,7 +92,6 @@ public partial class NotesViewModel : ObservableObject {
     private void ShowBigNote(Note note) {
         BigNote = note;
         IsBigNoteShown = true;
-        IsSmartNote = false;
     }
 
     [RelayCommand]

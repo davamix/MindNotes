@@ -4,6 +4,7 @@ using MindNotes.Core.Models;
 using MindNotes.Core.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace MindNotes.Desktop.ViewModels;
 
@@ -23,12 +24,22 @@ public partial class NotesViewModel : ObservableObject {
     private Note bigNote;
 
     [ObservableProperty]
-    private bool isSmartNote;
+    private bool isSmartNoteShown;
+
+    private StringBuilder _smartNoteContentStream = new();
+    public string SmartNoteContent {
+        get => _smartNoteContentStream.ToString();
+        set {
+            _smartNoteContentStream.Append(value);
+            OnPropertyChanged(nameof(SmartNoteContent));
+        }
+    }
 
     public NotesViewModel(INotesService notesService,
         INotificationHub notificationHub) {
         _notesService = notesService;
         _notificationHub = notificationHub;
+
         LoadNotes();
     }
 

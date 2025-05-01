@@ -110,7 +110,10 @@
 								 Note="{Binding BigNote, Mode=TwoWay}"
 								 SaveCommand="{Binding UpdateNoteCommand}"
 								 DeleteCommand="{Binding DeleteNoteCommand}"
-								 IsSmartNote="{Binding IsSmartNote}"
 								 Visibility="Collapsed"/>
+
+		<controls:SmartNoteControl ShowSmartNote="{Binding IsSmartNoteShown, Mode=TwoWay}"
+								   ContentNote="{Binding SmartNoteContent}"
+								   Visibility="Collapsed" />
 	</Grid>
 </UserControl>
