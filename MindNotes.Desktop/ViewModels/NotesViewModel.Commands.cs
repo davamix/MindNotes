@@ -75,14 +75,13 @@ public partial class NotesViewModel : ObservableObject {
     [RelayCommand]
     private async Task SmartSearch(string query) {
         try {
+            _smartNoteContentStream.Clear();
             IsSmartNoteShown = true;
 
             await foreach(var response in _notesService.SmartSearchNoteAsync(query)) {
                 await Task.Delay(1);
                 SmartNoteContent = response;
             }
-
-            _smartNoteContentStream.Clear();
         } catch (Exception ex) {
             Notify("Error on smart search.", ex.Message, NotificationSeverity.Error);
         }

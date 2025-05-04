@@ -113,7 +113,7 @@
 								 Visibility="Collapsed"/>
 
 		<controls:SmartNoteControl ShowSmartNote="{Binding IsSmartNoteShown, Mode=TwoWay}"
-								   ContentNote="{Binding SmartNoteContent}"
+								   NoteContent="{Binding SmartNoteContent, Mode=TwoWay}"
 								   Visibility="Collapsed" />
 	</Grid>
 </UserControl>

@@ -45,7 +45,7 @@
 								   ScrollViewer.VerticalScrollBarVisibility="Auto"
 								   TextWrapping="Wrap"
 								   Text="{Binding ElementName=bigNoteControl, Path=Note.Content}"
-								   IsTextSelectionEnabled="True"/>
+								   IsTextSelectionEnabled="True" />
 					</ScrollViewer>
 
 				</Border>
@@ -56,6 +56,7 @@
 					  HorizontalAlignment="Right"
 					  Opacity="0"
 					  Margin="5">
+
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -63,7 +64,9 @@
 						<!-- Empty space row -->
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+
 					<Button x:Name="btnEdit"
 							Grid.Row="0"
 							Background="Transparent"
@@ -96,8 +99,20 @@
 						<FontIcon Glyph="&#xE8BB;" />
 					</Button>
 
-					<Button x:Name="btnDelete"
+					<Slider x:Name="sliderFontSize"
 							Grid.Row="4"
+							Height="100"
+							Orientation="Vertical"
+							Maximum="72"
+							Minimum="2"
+							Value="20"
+							HorizontalAlignment="Center"
+							Margin="0,0,0,10"
+							ToolTipService.ToolTip="Font size"
+							ValueChanged="sliderFontSize_ValueChanged" />
+
+					<Button x:Name="btnDelete"
+							Grid.Row="5"
 							Background="Transparent"
 							BorderThickness="0"
 							ToolTipService.ToolTip="Delete note"
@@ -139,20 +154,28 @@
 							 KeyUp="txtContentBack_KeyUp" />
 				</Border>
 
-				<Button x:Name="btnSave"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Top"
-						Margin="5"
-						Background="Transparent"
-						BorderThickness="0"
-						ToolTipService.ToolTip="Save changes"
-						PointerEntered="button_PointerEntered"
-						PointerExited="button_PointerExited"
-						Click="Save_Click"
-						Command="{Binding ElementName=bigNoteControl, Path=SaveCommand}"
-						CommandParameter="{Binding ElementName=bigNoteControl, Path=Note}">
-					<FontIcon Glyph="&#xE74E;" />
-				</Button>
+				<!-- Right Toolbar -->
+				<Grid VerticalAlignment="Stretch"
+					  HorizontalAlignment="Right"
+					  Margin="5">
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+
+					<Button x:Name="btnSave"
+							Grid.Row="0"
+							Background="Transparent"
+							BorderThickness="0"
+							ToolTipService.ToolTip="Save changes"
+							PointerEntered="button_PointerEntered"
+							PointerExited="button_PointerExited"
+							Click="Save_Click"
+							Command="{Binding ElementName=bigNoteControl, Path=SaveCommand}"
+							CommandParameter="{Binding ElementName=bigNoteControl, Path=Note}">
+						<FontIcon Glyph="&#xE74E;" />
+					</Button>
+				</Grid>
 
 				<TextBlock x:Name="txtCounter"
 						   VerticalAlignment="Bottom"

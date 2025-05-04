@@ -1,19 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Input;
-using Windows.Devices.Bluetooth.Advertisement;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,12 +19,14 @@ public sealed partial class SmartNoteControl : UserControl {
             new PropertyMetadata(false, OnShowSmartNoteChanged)
         );
 
-    public static readonly DependencyProperty ContentNoteProperty =
+    public static readonly DependencyProperty NoteContentProperty =
         DependencyProperty.RegisterAttached(
-            "ContentNote",
+            "NoteContent",
             typeof(string),
             typeof(SmartNoteControl),
-            new PropertyMetadata(string.Empty));
+            new PropertyMetadata(string.Empty, OnNoteContentChanged));
+
+    
 
     public static readonly DependencyProperty NotesProperty =
         DependencyProperty.RegisterAttached(
@@ -43,9 +35,9 @@ public sealed partial class SmartNoteControl : UserControl {
             typeof(SmartNoteControl),
             new PropertyMetadata(new List<string>()));
 
-    public string ContentNote {
-        get { return (string)GetValue(ContentNoteProperty); }
-        set { SetValue(ContentNoteProperty, value); }
+    public string NoteContent {
+        get { return (string)GetValue(NoteContentProperty); }
+        set { SetValue(NoteContentProperty, value); }
     }
 
     public List<string> Notes {
@@ -69,9 +61,18 @@ public sealed partial class SmartNoteControl : UserControl {
         var isOpen = (bool)e.NewValue;
         if (isOpen) {
             control.Visibility = Visibility.Visible;
+            control.progressRing.IsActive = true;
         } else {
             control.Visibility = Visibility.Collapsed;
+            control.NoteContent = string.Empty;
         }
+    }
+
+    private static void OnNoteContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        var control = d as SmartNoteControl;
+        if (control == null) return;
+
+        control.progressRing.IsActive = false;
     }
 
     private void frontContent_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
@@ -94,4 +95,7 @@ public sealed partial class SmartNoteControl : UserControl {
         ShowSmartNote = false;
     }
 
+    private void sliderFontSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
+        txtNoteContent.FontSize = e.NewValue;
+    }
 }

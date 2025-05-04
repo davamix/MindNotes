@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<UserControl
-    x:Class="MindNotes.Desktop.Controls.SmartNoteControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MindNotes.Desktop.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    x:Name="smartNoteControl">
+<UserControl x:Class="MindNotes.Desktop.Controls.SmartNoteControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="using:MindNotes.Desktop.Controls"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 x:Name="smartNoteControl">
 
 	<Grid Background="#AA000000">
 		<!-- Front view note (read-only) -->
@@ -38,16 +37,32 @@
 			<Grid>
 				<Border Background="#7AA1D2"
 						CornerRadius="8"
-						Padding="16"
 						Translation="0,0,32"
 						Shadow="{StaticResource shadowBorderFront}">
-					<ScrollViewer>
-						<TextBlock x:Name="txtContentFront"
-								   ScrollViewer.VerticalScrollBarVisibility="Auto"
-								   TextWrapping="Wrap"
-								   Text="{Binding ElementName=smartNoteControl, Path=ContentNote}"
-								   IsTextSelectionEnabled="True" />
-					</ScrollViewer>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<Border Grid.Row="0"
+								Background="#5486C5"
+								Padding="16">
+							<TextBlock Text="Smart Note"
+									   Style="{StaticResource TitleLargeTextBlockStyle}" />
+						</Border>
+
+
+						<ScrollViewer Grid.Row="1"
+									  Padding="16">
+							<TextBlock x:Name="txtNoteContent"
+									   ScrollViewer.VerticalScrollBarVisibility="Auto"
+									   TextWrapping="Wrap"
+									   Text="{Binding ElementName=smartNoteControl, Path=NoteContent, Mode=TwoWay}"
+									   IsTextSelectionEnabled="True" />
+						</ScrollViewer>
+					</Grid>
+
 
 				</Border>
 
@@ -56,10 +71,13 @@
 					  VerticalAlignment="Stretch"
 					  HorizontalAlignment="Right"
 					  Opacity="0"
-					  Margin="5">
+					  Margin="10">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+
 					<Button x:Name="btnClose"
 							Grid.Row="0"
 							Background="Transparent"
@@ -70,7 +88,25 @@
 							Click="btnClose_Click">
 						<FontIcon Glyph="&#xE8BB;" />
 					</Button>
+
+					<Slider x:Name="sliderFontSize"
+							Grid.Row="2"
+							Height="100"
+							Orientation="Vertical"
+							Maximum="72"
+							Minimum="2"
+							Value="20"
+							Margin="0,0,0,10"
+							HorizontalAlignment="Center"
+							ToolTipService.ToolTip="Font size"
+							ValueChanged="sliderFontSize_ValueChanged" />
 				</Grid>
+
+
+				<ProgressRing x:Name="progressRing"
+							  IsActive="False"
+							  Width="100"
+							  Height="100" />
 
 			</Grid>
 

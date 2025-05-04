@@ -89,45 +89,29 @@ public class NotesService : INotesService {
     }
 
     public async IAsyncEnumerable<string> SmartSearchNoteAsync(string query) {
-        //try {
-            // Get notes from the database based on the query
-            var notes = await SearchNotesAsync(query);
+        // Get notes from the database based on the query
+        var notes = await SearchNotesAsync(query);
 
-            // Generate prompt
-            var prompt = LlModel.Gemma3PromptTemplate
-                .Replace("{user_prompt}", query);
+        // Generate prompt
+        var prompt = LlModel.Gemma3PromptTemplate
+            .Replace("{user_prompt}", query);
 
-            // Attach query and notes to the prompt
-            // <query>query</query>
-            // <note>content, date...</note>
-            // <note>content, date...</note>
-            // ...
-            prompt = prompt.Replace("{notes}",
-                string.Join("\n", notes.Select(x => LlModel.NotePromptTemplate
-                    .Replace("{content}", x.Content)
-                    .Replace("{note_id}", x.Id.ToString())
-                    .Replace("{date_updated}", x.UpdatedAt.ToString())
-                    .Replace("{date_created}", x.CreatedAt.ToString()))));
+        // Attach query and notes to the prompt
+        // <query>query</query>
+        // <note>content, date...</note>
+        // <note>content, date...</note>
+        // ...
+        prompt = prompt.Replace("{notes}",
+            string.Join("\n", notes.Select(x => LlModel.NotePromptTemplate
+                .Replace("{content}", x.Content)
+                .Replace("{note_id}", x.Id.ToString())
+                .Replace("{date_updated}", x.UpdatedAt.ToString())
+                .Replace("{date_created}", x.CreatedAt.ToString()))));
 
-            // Call the LLM with the prompt
-            var noteResponse = string.Empty;
-            await foreach (var response in _llmProvider.Query(prompt)) {
-                Debug.WriteLine(response);
-                //noteResponse += response;
-                yield return response;
-            }
-
-            // Create a new note with the response
-
-            // Return the new note
-            //return new Note() {
-            //    Content = noteResponse,
-            //    CreatedAt = DateTime.UtcNow,
-            //    UpdatedAt = DateTime.UtcNow,
-            //};
-
-        //} catch {
-        //    throw;
-        //}
+        // Call the LLM with the prompt
+        var noteResponse = string.Empty;
+        await foreach (var response in _llmProvider.Query(prompt)) {
+            yield return response;
+        }
     }
 }

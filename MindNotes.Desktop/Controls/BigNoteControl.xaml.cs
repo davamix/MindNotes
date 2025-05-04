@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using MindNotes.Core.Models;
 using Microsoft.UI.Input;
 using CommunityToolkit.Mvvm.Input;
-using System;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -108,6 +108,10 @@ public sealed partial class BigNoteControl : UserControl {
 
     private void txtContentBack_KeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e) {
         SetTextCounter();
+    }
+
+    private void sliderFontSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
+        txtContentFront.FontSize = e.NewValue;
     }
 
     private static void OnShowNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {

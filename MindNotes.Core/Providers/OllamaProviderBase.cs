@@ -14,7 +14,6 @@ public abstract class OllamaProviderBase {
 
     protected virtual async Task Initialize() {
         OllamaApiClient = new OllamaApiClient(new Uri(Configuration["AppSettings:Ollama:Server"]));
-        //OllamaApiClient.SelectedModel = Configuration["AppSettings:Ollama:EmbeddingModel"];
 
         var isOllamaRunning = await TestConnection();
 
