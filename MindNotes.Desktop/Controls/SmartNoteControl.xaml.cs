@@ -52,6 +52,8 @@ public sealed partial class SmartNoteControl : UserControl {
 
     public SmartNoteControl() {
         this.InitializeComponent();
+
+        mkdContent.Config = new CommunityToolkit.Labs.WinUI.MarkdownTextBlock.MarkdownConfig();
     }
 
     private static void OnShowSmartNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
@@ -96,6 +98,6 @@ public sealed partial class SmartNoteControl : UserControl {
     }
 
     private void sliderFontSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
-        txtNoteContent.FontSize = e.NewValue;
+        mkdContent.FontSize = e.NewValue;
     }
 }

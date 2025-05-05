@@ -68,6 +68,10 @@ public sealed partial class BigNoteControl : UserControl {
 
     public BigNoteControl() {
         this.InitializeComponent();
+
+        txtContentFront.Config = new CommunityToolkit.Labs.WinUI.MarkdownTextBlock.MarkdownConfig();
+
+        this.FontSize = 20;
     }
 
     private void Edit_Click(object sender, RoutedEventArgs e) {
@@ -111,7 +115,7 @@ public sealed partial class BigNoteControl : UserControl {
     }
 
     private void sliderFontSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
-        txtContentFront.FontSize = e.NewValue;
+        this.FontSize = e.NewValue;
     }
 
     private static void OnShowNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
@@ -139,6 +143,6 @@ public sealed partial class BigNoteControl : UserControl {
         frontContent.Visibility = Visibility.Visible;
     }
     private void SetTextCounter() {
-        txtCounter.Text = $"({txtContentBack.Text.Length} / {txtContentBack.MaxLength})";
+        //txtCounter.Text = $"({txtContentBack.Text.Length} / {txtContentBack.MaxLength})";
     }
 }

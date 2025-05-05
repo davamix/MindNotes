@@ -5,10 +5,11 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:controls="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 			 mc:Ignorable="d"
 			 x:Name="noteControl">
 
-		<Grid>
+	<Grid>
 		<!-- Front view note (read-only) -->
 		<Border x:Name="frontContent"
 				PointerEntered="frontContent_PointerEntered"
@@ -40,11 +41,14 @@
 						Translation="0,0,32"
 						Shadow="{StaticResource shadowBorderFront}">
 					<ScrollViewer>
-						<TextBlock x:Name="txtContentFront"
-								   ScrollViewer.VerticalScrollBarVisibility="Auto"
-								   TextWrapping="Wrap"
-								   Text="{Binding ElementName=noteControl, Path=Note.Content}"
-								   IsTextSelectionEnabled="True"/>
+						<controls:MarkdownTextBlock x:Name="mkdContent"
+													ScrollViewer.VerticalScrollBarVisibility="Auto"
+													Text="{Binding ElementName=noteControl, Path=Note.Content}"
+													UseAutoLinks="True"
+													UseEmphasisExtras="True"
+													UseListExtras="True"
+													UsePipeTables="True"
+													UseTaskLists="True" />
 					</ScrollViewer>
 
 				</Border>

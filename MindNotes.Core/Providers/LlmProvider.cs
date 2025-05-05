@@ -46,7 +46,7 @@ public static class LlModel {
         - Notes are enclosed between <note> and </note> tags.
         - If there aren't notes that provide related info to the user query, return "No relevant notes found".
         - At the end of the response, include a list of all note id's used in the response, if any.
-        - The output format is text plain, no markdown or json.
+        - The output format should be markdown.
         {notes}
         Query: {user_prompt}<end_of_turn>
         <start_of_turn>model

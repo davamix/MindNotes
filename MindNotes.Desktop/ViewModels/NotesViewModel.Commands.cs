@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,7 +21,7 @@ public partial class NotesViewModel : ObservableObject {
         try {
             await _notesService.UpdateNoteAsync(note);
 
-            var oldNoteIndex = Notes.IndexOf(note);
+            var oldNoteIndex = Notes.IndexOf(Notes.First(x => x.Id == note.Id));
             Notes.Move(oldNoteIndex, 0);
 
             BigNote = new Note() { Id = note.Id, Content = note.Content };

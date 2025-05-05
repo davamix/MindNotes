@@ -64,6 +64,8 @@ namespace MindNotes.Desktop.Controls {
 
         public NoteControl() {
             this.InitializeComponent();
+
+            mkdContent.Config = new CommunityToolkit.Labs.WinUI.MarkdownTextBlock.MarkdownConfig();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e) {

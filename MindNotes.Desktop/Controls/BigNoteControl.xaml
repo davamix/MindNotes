@@ -5,6 +5,7 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:controls="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 			 mc:Ignorable="d"
 			 x:Name="bigNoteControl">
 
@@ -41,11 +42,14 @@
 						Translation="0,0,32"
 						Shadow="{StaticResource shadowBorderFront}">
 					<ScrollViewer>
-						<TextBlock x:Name="txtContentFront"
-								   ScrollViewer.VerticalScrollBarVisibility="Auto"
-								   TextWrapping="Wrap"
-								   Text="{Binding ElementName=bigNoteControl, Path=Note.Content}"
-								   IsTextSelectionEnabled="True" />
+						<controls:MarkdownTextBlock x:Name="txtContentFront"
+													ScrollViewer.VerticalScrollBarVisibility="Auto"
+													Text="{Binding ElementName=bigNoteControl, Path=Note.Content}"
+													UseAutoLinks="True"
+													UseEmphasisExtras="True"
+													UseListExtras="True"
+													UsePipeTables="True"
+													UseTaskLists="True" />
 					</ScrollViewer>
 
 				</Border>
@@ -105,7 +109,7 @@
 							Orientation="Vertical"
 							Maximum="72"
 							Minimum="2"
-							Value="20"
+							Value="{Binding ElementName=bigNoteControl, Path=FontSize, Mode=TwoWay}"
 							HorizontalAlignment="Center"
 							Margin="0,0,0,10"
 							ToolTipService.ToolTip="Font size"
@@ -146,9 +150,9 @@
 
 					<TextBox x:Name="txtContentBack"
 							 Text="{Binding ElementName=bigNoteControl, Path=Note.Content, Mode=TwoWay}"
+							 FontSize="{Binding ElementName=bigNoteControl, Path=FontSize, Mode=TwoWay}"
 							 TextWrapping="Wrap"
 							 AcceptsReturn="True"
-							 MaxLength="300"
 							 HorizontalAlignment="Stretch"
 							 VerticalAlignment="Stretch"
 							 KeyUp="txtContentBack_KeyUp" />
@@ -160,6 +164,8 @@
 					  Margin="5">
 
 					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
@@ -175,6 +181,18 @@
 							CommandParameter="{Binding ElementName=bigNoteControl, Path=Note}">
 						<FontIcon Glyph="&#xE74E;" />
 					</Button>
+
+					<Slider x:Name="sliderBackFontSize"
+							Grid.Row="2"
+							Height="100"
+							Orientation="Vertical"
+							Maximum="72"
+							Minimum="2"
+							Value="{Binding ElementName=bigNoteControl, Path=FontSize, Mode=TwoWay}"
+							HorizontalAlignment="Center"
+							Margin="0,0,0,10"
+							ToolTipService.ToolTip="Font size"
+							ValueChanged="sliderFontSize_ValueChanged" />
 				</Grid>
 
 				<TextBlock x:Name="txtCounter"

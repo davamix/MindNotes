@@ -5,6 +5,7 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:controls="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 			 mc:Ignorable="d"
 			 x:Name="smartNoteControl">
 
@@ -55,11 +56,20 @@
 
 						<ScrollViewer Grid.Row="1"
 									  Padding="16">
-							<TextBlock x:Name="txtNoteContent"
+							<!--<TextBlock x:Name="txtNoteContent"
 									   ScrollViewer.VerticalScrollBarVisibility="Auto"
 									   TextWrapping="Wrap"
 									   Text="{Binding ElementName=smartNoteControl, Path=NoteContent, Mode=TwoWay}"
-									   IsTextSelectionEnabled="True" />
+									   IsTextSelectionEnabled="True" />-->
+							<controls:MarkdownTextBlock x:Name="mkdContent"
+														ScrollViewer.VerticalScrollBarVisibility="Auto"
+														Text="{Binding ElementName=smartNoteControl, Path=NoteContent, Mode=TwoWay}"
+														UseAutoLinks="True"
+														UseEmphasisExtras="True"
+														UseListExtras="True"
+														UsePipeTables="True"
+														UseTaskLists="True" />
+
 						</ScrollViewer>
 					</Grid>
 
