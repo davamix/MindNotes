@@ -10,13 +10,13 @@
   <Identity
     Name="31a3dc65-3619-4172-a9bc-c035b4db0f20"
     Publisher="CN=Davamix"
-    Version="0.1.1.0" />
+    Version="0.1.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="31a3dc65-3619-4172-a9bc-c035b4db0f20" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MindNotes (Package)</DisplayName>
-    <PublisherDisplayName>davam_p3h1i13</PublisherDisplayName>
+    <DisplayName>Mind Notes</DisplayName>
+    <PublisherDisplayName>Davamix</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -34,12 +34,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MindNotes (Package)"
-        Description="MindNotes (Package)"
+        DisplayName="Mind Notes"
+        Description="WinUI 3 application to take notes."
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
