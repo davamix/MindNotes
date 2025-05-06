@@ -78,4 +78,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MSIX Package
-        path: ${{ github.workspace }}\\Packages
+        path: ${{ github.workspace }}\\MindNotes\\MindNotes (Package)\\Packages
