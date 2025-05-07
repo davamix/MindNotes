@@ -1,4 +1,4 @@
-# MindNotes (WIP)
+# MindNotes
 [![WinUI 3 MSIX app](https://github.com/davamix/MindNotes/actions/workflows/main.yml/badge.svg)](https://github.com/davamix/MindNotes/actions/workflows/main.yml)
 
 WinUI 3 application to take notes.
