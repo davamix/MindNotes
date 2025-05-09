@@ -9,7 +9,7 @@
 
   <Identity
     Name="31a3dc65-3619-4172-a9bc-c035b4db0f20"
-    Publisher="CN=Davamix"
+    Publisher="CN=Davamix, O=Davamix, C=US"
     Version="0.1.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="31a3dc65-3619-4172-a9bc-c035b4db0f20" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

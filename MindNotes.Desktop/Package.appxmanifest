@@ -9,14 +9,14 @@
 
   <Identity
     Name="d9f0c6f0-303c-4c8a-a034-05b6f696de30"
-    Publisher="CN=davam_p3h1i13"
+    Publisher="CN=Davamix, O=Davamix, C=US"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d9f0c6f0-303c-4c8a-a034-05b6f696de30" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MindNotes.Desktop</DisplayName>
-    <PublisherDisplayName>davam_p3h1i13</PublisherDisplayName>
+    <PublisherDisplayName>Davamix</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
