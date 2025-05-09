@@ -5,7 +5,7 @@
 			 xmlns:local="using:MindNotes.Desktop.Controls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:controls="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
+			 xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
 			 mc:Ignorable="d"
 			 x:Name="noteControl">
 
@@ -44,11 +44,8 @@
 						<controls:MarkdownTextBlock x:Name="mkdContent"
 													ScrollViewer.VerticalScrollBarVisibility="Auto"
 													Text="{Binding ElementName=noteControl, Path=Note.Content}"
-													UseAutoLinks="True"
-													UseEmphasisExtras="True"
-													UseListExtras="True"
-													UsePipeTables="True"
-													UseTaskLists="True" />
+													Background="Transparent"
+													CodeBackground="#AAFFFFFF"/>
 					</ScrollViewer>
 
 				</Border>

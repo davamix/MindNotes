@@ -69,8 +69,6 @@ public sealed partial class BigNoteControl : UserControl {
     public BigNoteControl() {
         this.InitializeComponent();
 
-        txtContentFront.Config = new CommunityToolkit.Labs.WinUI.MarkdownTextBlock.MarkdownConfig();
-
         this.FontSize = 20;
     }
 
