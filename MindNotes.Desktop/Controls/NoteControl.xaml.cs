@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using MindNotes.Core.Models;
 using System;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -112,6 +113,10 @@ namespace MindNotes.Desktop.Controls {
 
         private void SetTextCounter() {
             txtCounter.Text = $"({txtContentBack.Text.Length} / {txtContentBack.MaxLength})";
+        }
+
+        private async void mkdContent_LinkClicked(object sender, CommunityToolkit.WinUI.UI.Controls.LinkClickedEventArgs e) {
+            await Launcher.LaunchUriAsync(new Uri(e.Link));
         }
     }
 }

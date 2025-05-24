@@ -46,7 +46,9 @@
 													ScrollViewer.VerticalScrollBarVisibility="Auto"
 													Text="{Binding ElementName=bigNoteControl, Path=Note.Content}"
 													Background="Transparent"
-													CodeBackground="#AAFFFFFF"/>
+													CodeBackground="#AAFFFFFF"
+													LinkClicked="txtContentFront_LinkClicked">
+						</controls:MarkdownTextBlock>
 					</ScrollViewer>
 
 				</Border>

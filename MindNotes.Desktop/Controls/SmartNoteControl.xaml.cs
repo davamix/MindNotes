@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Input;
 using System;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +27,7 @@ public sealed partial class SmartNoteControl : UserControl {
             typeof(SmartNoteControl),
             new PropertyMetadata(string.Empty, OnNoteContentChanged));
 
-    
+
 
     public static readonly DependencyProperty NotesProperty =
         DependencyProperty.RegisterAttached(
@@ -97,5 +98,9 @@ public sealed partial class SmartNoteControl : UserControl {
 
     private void sliderFontSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
         mkdContent.FontSize = e.NewValue;
+    }
+
+    private async void mkdContent_LinkClicked(object sender, CommunityToolkit.WinUI.UI.Controls.LinkClickedEventArgs e) {
+        await Launcher.LaunchUriAsync(new Uri(e.Link));
     }
 }

@@ -45,7 +45,8 @@
 													ScrollViewer.VerticalScrollBarVisibility="Auto"
 													Text="{Binding ElementName=noteControl, Path=Note.Content}"
 													Background="Transparent"
-													CodeBackground="#AAFFFFFF"/>
+													CodeBackground="#AAFFFFFF"
+													LinkClicked="mkdContent_LinkClicked"/>
 					</ScrollViewer>
 
 				</Border>

@@ -60,7 +60,8 @@
 														ScrollViewer.VerticalScrollBarVisibility="Auto"
 														Text="{Binding ElementName=smartNoteControl, Path=NoteContent, Mode=TwoWay}"
 														Background="Transparent"
-														CodeBackground="#AAFFFFFF"/>
+														CodeBackground="#AAFFFFFF"
+														LinkClicked="mkdContent_LinkClicked"/>
 
 						</ScrollViewer>
 					</Grid>

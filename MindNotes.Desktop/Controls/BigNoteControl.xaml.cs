@@ -4,6 +4,8 @@ using MindNotes.Core.Models;
 using Microsoft.UI.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Windows.System;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -142,5 +144,9 @@ public sealed partial class BigNoteControl : UserControl {
     }
     private void SetTextCounter() {
         //txtCounter.Text = $"({txtContentBack.Text.Length} / {txtContentBack.MaxLength})";
+    }
+
+    private async void txtContentFront_LinkClicked(object sender, CommunityToolkit.WinUI.UI.Controls.LinkClickedEventArgs e) {
+        await Launcher.LaunchUriAsync(new Uri(e.Link));
     }
 }
